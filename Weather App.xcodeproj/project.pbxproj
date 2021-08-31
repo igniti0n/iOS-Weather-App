@@ -17,6 +17,19 @@
 		2C1E0DD026DE8DFB00DC2412 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DCF26DE8DFB00DC2412 /* RootCoordinator.swift */; };
 		2C1E0DDA26DE927F00DC2412 /* ConstraintsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DD826DE927E00DC2412 /* ConstraintsExtension.swift */; };
 		2C1E0DDB26DE927F00DC2412 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DD926DE927F00DC2412 /* UIViewControllerExtension.swift */; };
+		2C1E0DE026DE940800DC2412 /* HomeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C1E0DDF26DE940800DC2412 /* HomeViewController.storyboard */; };
+		2C1E0DE226DE96D600DC2412 /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C1E0DE126DE96D600DC2412 /* SearchViewController.storyboard */; };
+		2C1E0DE426DE96E700DC2412 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C1E0DE326DE96E700DC2412 /* SettingsViewController.storyboard */; };
+		2C1E0DE626DE96F700DC2412 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DE526DE96F700DC2412 /* HomeViewController.swift */; };
+		2C1E0DE826DE970200DC2412 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DE726DE970200DC2412 /* HomeView.swift */; };
+		2C1E0DEA26DE970E00DC2412 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DE926DE970E00DC2412 /* HomeViewModel.swift */; };
+		2C1E0DEC26DE971C00DC2412 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DEB26DE971C00DC2412 /* SearchViewController.swift */; };
+		2C1E0DEE26DE972A00DC2412 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DED26DE972A00DC2412 /* SearchView.swift */; };
+		2C1E0DF026DE973500DC2412 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DEF26DE973500DC2412 /* SearchViewModel.swift */; };
+		2C1E0DF226DE974200DC2412 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DF126DE974200DC2412 /* SettingsViewController.swift */; };
+		2C1E0DF426DE974B00DC2412 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DF326DE974B00DC2412 /* SettingsView.swift */; };
+		2C1E0DF626DE975800DC2412 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DF526DE975800DC2412 /* SettingsViewModel.swift */; };
+		2C1E0DF926DE985D00DC2412 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DF826DE985D00DC2412 /* Weather.swift */; };
 		B6FD8B5D4D41B82A4EAB524A /* Pods_Weather_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A414344A5B1A61FC82A833 /* Pods_Weather_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +46,19 @@
 		2C1E0DCF26DE8DFB00DC2412 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		2C1E0DD826DE927E00DC2412 /* ConstraintsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintsExtension.swift; sourceTree = "<group>"; };
 		2C1E0DD926DE927F00DC2412 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		2C1E0DDF26DE940800DC2412 /* HomeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = HomeViewController.storyboard; path = ../../../../../../HomeViewController.storyboard; sourceTree = "<group>"; };
+		2C1E0DE126DE96D600DC2412 /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SearchViewController.storyboard; path = ../../../../../../SearchViewController.storyboard; sourceTree = "<group>"; };
+		2C1E0DE326DE96E700DC2412 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SettingsViewController.storyboard; path = ../../../../../../SettingsViewController.storyboard; sourceTree = "<group>"; };
+		2C1E0DE526DE96F700DC2412 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = ../../../../../../HomeViewController.swift; sourceTree = "<group>"; };
+		2C1E0DE726DE970200DC2412 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = ../../../../../../HomeView.swift; sourceTree = "<group>"; };
+		2C1E0DE926DE970E00DC2412 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeViewModel.swift; path = ../../../../../../HomeViewModel.swift; sourceTree = "<group>"; };
+		2C1E0DEB26DE971C00DC2412 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = ../../../../../../SearchViewController.swift; sourceTree = "<group>"; };
+		2C1E0DED26DE972A00DC2412 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchView.swift; path = ../../../../../../SearchView.swift; sourceTree = "<group>"; };
+		2C1E0DEF26DE973500DC2412 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewModel.swift; path = ../../../../../../SearchViewModel.swift; sourceTree = "<group>"; };
+		2C1E0DF126DE974200DC2412 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ../../../../../../SettingsViewController.swift; sourceTree = "<group>"; };
+		2C1E0DF326DE974B00DC2412 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = ../../../../../../SettingsView.swift; sourceTree = "<group>"; };
+		2C1E0DF526DE975800DC2412 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewModel.swift; path = ../../../../../../SettingsViewModel.swift; sourceTree = "<group>"; };
+		2C1E0DF826DE985D00DC2412 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Weather.swift; path = ../../../../Weather.swift; sourceTree = "<group>"; };
 		6F31620FF3566A817E728065 /* Pods-Weather App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather App.release.xcconfig"; path = "Target Support Files/Pods-Weather App/Pods-Weather App.release.xcconfig"; sourceTree = "<group>"; };
 		C22CF3AF6DD10599F2D058A2 /* Pods-Weather App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather App.debug.xcconfig"; path = "Target Support Files/Pods-Weather App/Pods-Weather App.debug.xcconfig"; sourceTree = "<group>"; };
 		F4A414344A5B1A61FC82A833 /* Pods_Weather_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +123,7 @@
 		2C1E0DC626DE8D4600DC2412 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2C1E0DF826DE985D00DC2412 /* Weather.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -136,6 +163,9 @@
 		2C1E0DCB26DE8D6900DC2412 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2C1E0DDE26DE93F300DC2412 /* SettingsVC */,
+				2C1E0DDD26DE93EA00DC2412 /* SearchVC */,
+				2C1E0DDC26DE93E100DC2412 /* HomeVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -156,6 +186,39 @@
 				2C1E0DD926DE927F00DC2412 /* UIViewControllerExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2C1E0DDC26DE93E100DC2412 /* HomeVC */ = {
+			isa = PBXGroup;
+			children = (
+				2C1E0DDF26DE940800DC2412 /* HomeViewController.storyboard */,
+				2C1E0DE526DE96F700DC2412 /* HomeViewController.swift */,
+				2C1E0DE726DE970200DC2412 /* HomeView.swift */,
+				2C1E0DE926DE970E00DC2412 /* HomeViewModel.swift */,
+			);
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		2C1E0DDD26DE93EA00DC2412 /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				2C1E0DE126DE96D600DC2412 /* SearchViewController.storyboard */,
+				2C1E0DEB26DE971C00DC2412 /* SearchViewController.swift */,
+				2C1E0DED26DE972A00DC2412 /* SearchView.swift */,
+				2C1E0DEF26DE973500DC2412 /* SearchViewModel.swift */,
+			);
+			path = SearchVC;
+			sourceTree = "<group>";
+		};
+		2C1E0DDE26DE93F300DC2412 /* SettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				2C1E0DE326DE96E700DC2412 /* SettingsViewController.storyboard */,
+				2C1E0DF126DE974200DC2412 /* SettingsViewController.swift */,
+				2C1E0DF326DE974B00DC2412 /* SettingsView.swift */,
+				2C1E0DF526DE975800DC2412 /* SettingsViewModel.swift */,
+			);
+			path = SettingsVC;
 			sourceTree = "<group>";
 		};
 		7AFADA59E6996EE793539720 /* Pods */ = {
@@ -226,8 +289,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1E0DE026DE940800DC2412 /* HomeViewController.storyboard in Resources */,
 				2C1E0DBF26DE8CAC00DC2412 /* LaunchScreen.storyboard in Resources */,
 				2C1E0DBC26DE8CAC00DC2412 /* Assets.xcassets in Resources */,
+				2C1E0DE226DE96D600DC2412 /* SearchViewController.storyboard in Resources */,
+				2C1E0DE426DE96E700DC2412 /* SettingsViewController.storyboard in Resources */,
 				2C1E0DBA26DE8CA900DC2412 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,13 +347,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1E0DF426DE974B00DC2412 /* SettingsView.swift in Sources */,
+				2C1E0DF926DE985D00DC2412 /* Weather.swift in Sources */,
+				2C1E0DE826DE970200DC2412 /* HomeView.swift in Sources */,
+				2C1E0DEC26DE971C00DC2412 /* SearchViewController.swift in Sources */,
 				2C1E0DDA26DE927F00DC2412 /* ConstraintsExtension.swift in Sources */,
 				2C1E0DCE26DE8D9D00DC2412 /* Coordinator.swift in Sources */,
+				2C1E0DEE26DE972A00DC2412 /* SearchView.swift in Sources */,
+				2C1E0DF026DE973500DC2412 /* SearchViewModel.swift in Sources */,
+				2C1E0DEA26DE970E00DC2412 /* HomeViewModel.swift in Sources */,
 				2C1E0DB726DE8CA900DC2412 /* ViewController.swift in Sources */,
+				2C1E0DE626DE96F700DC2412 /* HomeViewController.swift in Sources */,
+				2C1E0DF226DE974200DC2412 /* SettingsViewController.swift in Sources */,
 				2C1E0DD026DE8DFB00DC2412 /* RootCoordinator.swift in Sources */,
 				2C1E0DB326DE8CA900DC2412 /* AppDelegate.swift in Sources */,
 				2C1E0DDB26DE927F00DC2412 /* UIViewControllerExtension.swift in Sources */,
 				2C1E0DB526DE8CA900DC2412 /* SceneDelegate.swift in Sources */,
+				2C1E0DF626DE975800DC2412 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

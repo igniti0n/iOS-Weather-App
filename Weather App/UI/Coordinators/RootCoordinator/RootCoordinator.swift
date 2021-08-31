@@ -13,8 +13,35 @@ class RootCoordinator : Coordinator {
     
     var navigationController = UINavigationController()
     
+    var weather : Weather?
+    
     func start() -> UIViewController {
-        <#code#>
+        let vc = createHomeVC()
+        navigationController.showAsRoot()
+        navigationController.pushViewController(vc, animated: true)
+        return navigationController
+    }
+    
+    private func createHomeVC() -> UIViewController{
+        let vc = HomeViewController()
+        let vm = HomeViewModel()
+        //add callbacks...
+        
+        vc.homeViewModel = vm
+        return vc
+    }
+    
+    private func createSettingsVC() -> UIViewController{
+        let vc = SettingsViewController()
+        
+        
+        return vc
+    }
+    
+    private func createSearchVC() -> UIViewController{
+        let vc = SearchViewController()
+        
+        return vc
     }
     
     
