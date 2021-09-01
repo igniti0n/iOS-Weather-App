@@ -18,6 +18,7 @@ class RootCoordinator : Coordinator {
     func start() -> UIViewController {
         let vc = createHomeVC()
         navigationController.showAsRoot()
+        navigationController.isNavigationBarHidden = true
         navigationController.pushViewController(vc, animated: true)
         return navigationController
     }
@@ -25,7 +26,7 @@ class RootCoordinator : Coordinator {
     private func createHomeVC() -> UIViewController{
         let vc = HomeViewController()
         let vm = HomeViewModel()
-        //add callbacks...
+        //add callbacks here
         
         vc.homeViewModel = vm
         return vc
