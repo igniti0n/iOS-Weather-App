@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  Weather App
+//  Challenge -- Memory game
 //
-//  Created by Ivan Stajcer on 31.08.2021..
+//  Created by Ivan Stajcer on 27.08.2021..
 //
 
 import UIKit
