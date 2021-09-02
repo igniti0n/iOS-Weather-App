@@ -34,6 +34,7 @@
 		2C6CB2E126E0BF1400806BAD /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E026E0BF1400806BAD /* HomeCoordinator.swift */; };
 		2C6CB2E326E0BF4A00806BAD /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E226E0BF4A00806BAD /* SearchCoordinator.swift */; };
 		2C6CB2E526E0D16D00806BAD /* NavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E426E0D16D00806BAD /* NavigationBarExtension.swift */; };
+		2C6CB2E726E0EFC400806BAD /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E626E0EFC400806BAD /* CheckBox.swift */; };
 		B6FD8B5D4D41B82A4EAB524A /* Pods_Weather_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A414344A5B1A61FC82A833 /* Pods_Weather_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		2C6CB2E026E0BF1400806BAD /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		2C6CB2E226E0BF4A00806BAD /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		2C6CB2E426E0D16D00806BAD /* NavigationBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarExtension.swift; sourceTree = "<group>"; };
+		2C6CB2E626E0EFC400806BAD /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		6F31620FF3566A817E728065 /* Pods-Weather App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather App.release.xcconfig"; path = "Target Support Files/Pods-Weather App/Pods-Weather App.release.xcconfig"; sourceTree = "<group>"; };
 		C22CF3AF6DD10599F2D058A2 /* Pods-Weather App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather App.debug.xcconfig"; path = "Target Support Files/Pods-Weather App/Pods-Weather App.debug.xcconfig"; sourceTree = "<group>"; };
 		F4A414344A5B1A61FC82A833 /* Pods_Weather_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				2C1E0DD726DE927E00DC2412 /* Extensions */,
+				2C6CB2E626E0EFC400806BAD /* CheckBox.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				2C1E0DCE26DE8D9D00DC2412 /* Coordinator.swift in Sources */,
 				2C1E0DD026DE8DFB00DC2412 /* RootCoordinator.swift in Sources */,
 				2C6CB2DD26E0BEC600806BAD /* ViewController.swift in Sources */,
+				2C6CB2E726E0EFC400806BAD /* CheckBox.swift in Sources */,
 				2C1E0DB326DE8CA900DC2412 /* AppDelegate.swift in Sources */,
 				2C1E0DDB26DE927F00DC2412 /* UIViewControllerExtension.swift in Sources */,
 				2C1E0DB526DE8CA900DC2412 /* SceneDelegate.swift in Sources */,

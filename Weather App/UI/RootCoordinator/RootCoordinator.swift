@@ -11,6 +11,10 @@ import SnapKit
 
 class RootCoordinator : Coordinator {
     
+    /*
+     PREKO OVOG POSTAVIM HOME COORDINATOR,
+     on dalje zove Search i Settings kordinatore
+     */
     var childCoordinator : Coordinator?
     
     func start() -> UIViewController {

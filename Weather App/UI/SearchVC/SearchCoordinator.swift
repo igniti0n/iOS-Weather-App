@@ -8,6 +8,11 @@
 import Foundation
 import  UIKit
 
+
+/*
+ nisam dodao još funkcinalnosti, samo da se moze prikazati
+ */
+
 class SearchCoordinator : Coordinator {
     
     func start() -> UIViewController {

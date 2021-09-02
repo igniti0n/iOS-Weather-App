@@ -1,9 +1,3 @@
-//
-//  HomeView.swift
-//  Weather App
-//
-//  Created by Ivan Stajcer on 31.08.2021..
-//
 
 import Foundation
 import UIKit
@@ -12,11 +6,21 @@ import SnapKit
 let normalFontSize : CGFloat = 30.0
 
 class HomeView : UIView {
+    /*
+     Dijelim skrin na gornji i donji dio,
+     u donjem dijelu koristim StackView za prikazivanje min i max temperature
+     te jos jedan StackView za prikaz detalja(pressure,humidity,wind)
+     
+     Dodao sam callback za pritisak na 'search' i 'settings' buttone,
+     čime HomeCoordinator zove start() metodu Search ili Settings kordinatora
+     */
     
     private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
     
     private lazy var searchButton = UIButton()
     private lazy var settingsButton = UIButton()
+    
+    private lazy var weatherIcon = UIImageView()
     
     private lazy var temperatureLabel = UILabel()
     private lazy var cityNameLabel = UILabel()
@@ -36,6 +40,23 @@ class HomeView : UIView {
     var searchButtonPressed : (()->Void)?
     var settingsButtonPressed : (()->Void)?
     
+    
+    var conditionId = 802
+    
+    var iconName: String {
+        switch conditionId {
+            case 200...232:
+            return "cloud.bolt" case 300...321:
+            return "cloud.drizzle" case 500...531:
+            return "cloud.rain" case 600...622:
+            return "cloud.snow" case 701...781:
+            return "cloud.fog" case 800:
+            return "sun.max" case 801...804:
+            return "cloud.bolt" default:
+            return "cloud"
+                
+            }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,6 +78,10 @@ class HomeView : UIView {
         backgroundImageView.image = img
         backgroundImageView.contentMode = .scaleToFill
         insertSubview(backgroundImageView, at: 0)
+        
+        weatherIcon.image = UIImage(systemName: iconName)
+        weatherIcon.tintColor = UIColor(red: (30/255.0), green: (67/255.0), blue: (71/255.0), alpha: 1.0)
+        addSubview(weatherIcon)
       
         searchButton.setImage(UIImage(named: "search")!, for: .normal)
         searchButton.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
@@ -174,7 +199,8 @@ class HomeView : UIView {
         
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(44)
-            make.top.left.equalTo(self.safeAreaLayoutGuide).offset(40)
+            make.top.equalTo(safeAreaLayoutGuide).offset(10)
+            make.left.equalTo(safeAreaLayoutGuide).offset(40)
         }
         
         settingsButton.snp.makeConstraints { make in
@@ -182,10 +208,18 @@ class HomeView : UIView {
             make.left.equalTo(searchButton.snp.right).offset(20)
         }
         
+        
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(searchButton.snp.bottom).offset(60)
             make.trailing.equalToSuperview().inset(10)
             //make.height.equalTo(160)
+        }
+        
+        weatherIcon.snp.makeConstraints { make in
+            make.top.equalTo(self).inset(40)
+            make.right.equalTo(safeAreaLayoutGuide).inset(30)
+            make.bottom.equalTo(temperatureLabel.snp.top).inset(-30)
+            make.width.equalTo(weatherIcon.snp.height)
         }
         
         cityNameLabel.snp.makeConstraints { make in
@@ -215,3 +249,5 @@ class HomeView : UIView {
     
     
 }
+
+

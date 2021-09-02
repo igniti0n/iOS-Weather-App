@@ -9,8 +9,11 @@ import  UIKit
 
 class HomeCoordinator : Coordinator {
     
+/*
+     HOME COORDINATOR IMA NAVIGATION CONTROLLER, KOJI STAVLJA SETTINGS
+    ILI SEARCH NA NJEGA
+ */
     let navigationController = UINavigationController()
-    
     var weather : Weather?
     
     func start() -> UIViewController {
@@ -34,6 +37,8 @@ class HomeCoordinator : Coordinator {
             [weak self] in
             self?.showSettingsVC()
         }
+        
+        //ovdje callbackovi za VM
         
         vc.homeViewModel = vm
         return vc

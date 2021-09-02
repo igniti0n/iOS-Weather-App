@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 import SnapKit
 
+/*
+ nisam dodao još funkcinalnosti, samo da se moze prikazati
+ */
+
 class SettingsCoordinator : Coordinator {
     
     func start() -> UIViewController {

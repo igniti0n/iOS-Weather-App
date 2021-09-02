@@ -11,6 +11,11 @@ import SnapKit
 
 class SearchView : UIView {
     
+    private lazy var searchField = UITextField()
+    private lazy var searchButton = UIButton()
+    
+    private lazy var tabelView = UITableView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
@@ -27,7 +32,8 @@ class SearchView : UIView {
     
     private func setUpView(){
         
-        
+        searchField.placeholder = "Search"
+        addSubview(searchField)
         
     }
     
