@@ -10,6 +10,10 @@ import Foundation
 
 class SettingsViewModel {
     
+    var settings : Settings?
+    
+    
+    
     
     
 }

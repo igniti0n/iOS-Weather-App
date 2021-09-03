@@ -12,9 +12,6 @@ class HomeViewController: UIViewController {
     var homeViewModel : HomeViewModel!
     var homeView = HomeView()
     
-    var settingsPressed : (()->Void)?
-    var searchPressed : (()->Void)?
-    
     override func loadView() {
         super.loadView()
         addCallbacks()
@@ -29,8 +26,16 @@ class HomeViewController: UIViewController {
     
     private func addCallbacks(){
         
-        homeView.searchButtonPressed = searchPressed
-        homeView.settingsButtonPressed = settingsPressed
+        homeView.searchButtonPressed = {
+            [weak self] in
+            self?.homeViewModel.searchPressed?()
+        }
+        
+        homeView.settingsButtonPressed = {
+            [weak self] in
+            self?.homeViewModel.settingsPressed?()
+        }
+       
     }
 
 }

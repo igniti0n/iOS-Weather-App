@@ -25,8 +25,9 @@ class SettingsCoordinator : Coordinator {
     
     private func createSettingsVC() -> UIViewController{
         let vc = SettingsViewController()
+        let vm = SettingsViewModel()
         
-        
+        vc.settingsViewModel = vm
         return vc
     }
     

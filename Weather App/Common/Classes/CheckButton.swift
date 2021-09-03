@@ -6,16 +6,14 @@
 //
 import UIKit
 
-class UICheckBox: UIButton {
+class CheckButton : UIButton {
 
-    private var userDefaultsKey: String!
-    private var isChecked: Bool!
+    var isChecked: Bool!
     
-    private weak var oppositeCheckbox: UICheckBox?
+    private weak var oppositeCheckbox: CheckButton?
 
-    required init(_ userDefaultsKey: String) {
-        self.userDefaultsKey = userDefaultsKey
-        self.isChecked = UserDefaults.standard.bool(forKey: userDefaultsKey)
+    required init( initialChecked : Bool) {
+        self.isChecked = initialChecked
         
         super.init(frame: .zero)
         
@@ -35,14 +33,14 @@ class UICheckBox: UIButton {
         oppositeCheckbox?.flipState()
     }
     
-    public func setOpposite(_ opposite: UICheckBox) {
+    public func setOpposite(_ opposite: CheckButton) {
         self.oppositeCheckbox = opposite
     }
     
     private func flipState() {
         isChecked.toggle()
-        UserDefaults.standard.set(isChecked, forKey: userDefaultsKey)
-        UserDefaults.standard.synchronize()
+//        UserDefaults.standard.set(isChecked, forKey: userDefaultsKey)
+//        UserDefaults.standard.synchronize()
         updateImage()
     }
     

@@ -11,43 +11,32 @@ import SnapKit
 
 class SettingsView : UIView {
     
-    private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
+    var celsiusButtonPressed : (()->Void)?
+    var fahrenheitButtonPressed : (()->Void)?
+    var humidityButtonPressed : (()->Void)?
+    var pressureButtonPressed : (()->Void)?
+    var windButtonPressed : (()->Void)?
     
+    private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
     private lazy var topView = UIView()
     private lazy var bottomStackView = UIStackView()
-    
     //top
-    private lazy var celsiusCheckButton = UICheckBox( "isCelsius")
+    private lazy var celsiusCheckButton = CheckButton(initialChecked: true)
     private lazy var celsiusLabel = UILabel()
-    
-    private lazy var fahrenhitCheckButton =  UICheckBox("isFahrenhit")
+    private lazy var fahrenhitCheckButton =  CheckButton(initialChecked: false)
     private lazy var fahrenheitLabel = UILabel()
-    
     private lazy var celsiusStackView = UIStackView()
     private lazy var fahrenhitStackView = UIStackView()
-    
     //bottom
     private lazy var humidity = UIImageView()
     private lazy var pressure = UIImageView()
     private lazy var wind = UIImageView()
-    
-    private lazy var humidityCheckButton = UICheckBox("showHumidity")
-    private lazy var pressureCheckButton = UICheckBox("showPressure")
-    private lazy var windCheckButton = UICheckBox("showWind")
-    
+    private lazy var humidityCheckButton = CheckButton(initialChecked: true)
+    private lazy var pressureCheckButton = CheckButton(initialChecked: true)
+    private lazy var windCheckButton = CheckButton(initialChecked: true)
     private lazy var humidityStackView = UIStackView()
     private lazy var pressureStackView = UIStackView()
     private lazy var windStackView = UIStackView()
-    
-    
-   
-    
-    var celsiusButtonPressed : (()->Void)?
-    var fahrenheitButtonPressed : (()->Void)?
-    
-    var humidityButtonPressed : (()->Void)?
-    var pressureButtonPressed : (()->Void)?
-    var windButtonPressed : (()->Void)?
     
     
     override init(frame: CGRect) {
@@ -119,17 +108,13 @@ class SettingsView : UIView {
     
     private func setUpBottomStack(){
         
-        let imgPressed = UIImage(named: "check")!
         let hImage = UIImage(named: "humidity")!
         let pImage = UIImage(named: "pressure")!
         let wImage = UIImage(named: "wind")!
         
-        
         humidity.image = hImage
         pressure.image = pImage
         wind.image = wImage
-        
-     
         
         humidityStackView.alignment = .center
         humidityStackView.spacing = 15
@@ -137,21 +122,17 @@ class SettingsView : UIView {
         humidityStackView.addArrangedSubview(humidity)
         humidityStackView.addArrangedSubview(humidityCheckButton)
         
-        
         pressureStackView.alignment = .center
         pressureStackView.spacing = 15
         pressureStackView.axis = .vertical
         pressureStackView.addArrangedSubview(pressure)
         pressureStackView.addArrangedSubview(pressureCheckButton)
         
-      
-        
         windStackView.alignment = .center
         windStackView.axis = .vertical
         windStackView.spacing = 15
         windStackView.addArrangedSubview(wind)
         windStackView.addArrangedSubview(windCheckButton)
-        
         
     }
     
@@ -160,7 +141,6 @@ class SettingsView : UIView {
         celsiusCheckButton.snp.makeConstraints { make in
             make.width.equalTo(celsiusCheckButton.snp.height)
         }
-        
         
         topView.snp.makeConstraints { make in
             make.top.left.right.equalTo(safeAreaLayoutGuide)
@@ -237,36 +217,6 @@ extension SettingsView {
     @objc private func windPressed(){
         print("wind pressed!")
         windButtonPressed?()
-    }
-    
-}
-
-
-class CheckBox : UIView {
-    
-    let button = UIButton()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setUp()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setUp(){
-        setUpView()
-        setUpConstraints()
-    }
-    
-    private func setUpView(){
-        
-        
-        
-    }
-    private func setUpConstraints(){
-        
     }
     
 }

@@ -3,8 +3,6 @@ import Foundation
 import UIKit
 import SnapKit
 
-let normalFontSize : CGFloat = 30.0
-
 class HomeView : UIView {
     /*
      Dijelim skrin na gornji i donji dio,
@@ -15,33 +13,24 @@ class HomeView : UIView {
      čime HomeCoordinator zove start() metodu Search ili Settings kordinatora
      */
     
-    private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
+    var searchButtonPressed : (()->Void)?
+    var settingsButtonPressed : (()->Void)?
+    var conditionId = 800
     
+    private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
     private lazy var searchButton = UIButton()
     private lazy var settingsButton = UIButton()
-    
     private lazy var weatherIcon = UIImageView()
-    
     private lazy var temperatureLabel = UILabel()
     private lazy var cityNameLabel = UILabel()
-    
     private lazy var bottomView = UIView()
-    
     private lazy var minMaxStackView = UIStackView()
     private lazy var minTemperatureLabel = UILabel()
     private lazy var maxTemperatureLabel = UILabel()
-    
     private lazy var detialsStackView = UIStackView()
     private lazy var humidityLabel = UILabel()
     private lazy var pressureLabel = UILabel()
     private lazy var windLabel = UILabel()
-    
-    
-    var searchButtonPressed : (()->Void)?
-    var settingsButtonPressed : (()->Void)?
-    
-    
-    var conditionId = 802
     
     var iconName: String {
         switch conditionId {

@@ -10,6 +10,8 @@ import Foundation
 
 class HomeViewModel {
     
-    
+    var weather : Weather?
+    var settingsPressed : (()->Void)?
+    var searchPressed : (()->Void)?
     
 }

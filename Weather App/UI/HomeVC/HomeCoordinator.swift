@@ -14,7 +14,6 @@ class HomeCoordinator : Coordinator {
     ILI SEARCH NA NJEGA
  */
     let navigationController = UINavigationController()
-    var weather : Weather?
     
     func start() -> UIViewController {
         let vc = createHomeVC()
@@ -33,12 +32,17 @@ class HomeCoordinator : Coordinator {
         let vc = HomeViewController()
         let vm = HomeViewModel()
         
-        vc.settingsPressed = {
+        vm.settingsPressed = {
             [weak self] in
             self?.showSettingsVC()
         }
         
-        //ovdje callbackovi za VM
+        vm.searchPressed = {
+            [weak self] in
+            self?.showSearchVC()
+        }
+        
+        
         
         vc.homeViewModel = vm
         return vc
