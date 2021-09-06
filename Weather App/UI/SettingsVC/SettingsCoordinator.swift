@@ -16,19 +16,19 @@ import SnapKit
 class SettingsCoordinator : Coordinator {
     
     func start() -> UIViewController {
+        
         let vc = createSettingsVC()
-       
         return vc
+        
     }
-    
-   
-    
+ 
     private func createSettingsVC() -> UIViewController{
+        
         let vc = SettingsViewController()
         let vm = SettingsViewModel()
-        
         vc.settingsViewModel = vm
         return vc
+        
     }
     
   

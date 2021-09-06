@@ -15,7 +15,6 @@ class HomeView : UIView {
     
     var searchButtonPressed : (()->Void)?
     var settingsButtonPressed : (()->Void)?
-    var conditionId = 800
     
     private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
     private lazy var searchButton = UIButton()
@@ -31,6 +30,19 @@ class HomeView : UIView {
     private lazy var humidityLabel = UILabel()
     private lazy var pressureLabel = UILabel()
     private lazy var windLabel = UILabel()
+    private var conditionId = 800
+   
+    private let normalFontSize : CGFloat = 30.0
+    private let downAttributes :  [NSAttributedString.Key : Any] =
+        [
+            .font : UIFont.systemFont(ofSize: 30.0 - 4, weight: .bold),
+            .foregroundColor : UIColor.white
+        ]
+    private let upAttributes :  [NSAttributedString.Key : Any]  =
+        [
+            .font : UIFont.systemFont(ofSize: 30.0 - 8),
+            .foregroundColor : UIColor.white
+        ]
     
     var iconName: String {
         switch conditionId {
@@ -56,6 +68,32 @@ class HomeView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func updateWeatherView(weather: Weather, settings: Settings){
+        
+        let messurmentUnit = settings.isCelsius ? "°C" : "°F"
+        temperatureLabel.text = "\(weather.temperature)\(messurmentUnit)"
+        minTemperatureLabel.text = "min \n \(weather.minTemperature)\(messurmentUnit)"
+        maxTemperatureLabel.text = "max \n \(weather.maxTemperature)\(messurmentUnit)"
+        cityNameLabel.text = weather.name
+        conditionId = weather.conditionId
+        weatherIcon.image = UIImage(systemName: iconName)
+        humidityLabel.attributedText = makeHumidityAttributedString(humidity: weather.humidity)
+        humidityLabel.isHidden = !settings.showHumidity
+        pressureLabel.attributedText = makePressureAttributedString(pressure: weather.pressure)
+        pressureLabel.isHidden = !settings.showPressure
+        windLabel.attributedText = makeWindAttributedString(wind: weather.windSpeed)
+        windLabel.isHidden = !settings.showWind
+        
+    }
+    
+    public func updateSettings(settings: Settings){
+        
+        humidityLabel.isHidden = settings.showHumidity
+        pressureLabel.isHidden = settings.showPressure
+        windLabel.isHidden = settings.showWind
+        
+    }
+    
     private func setUp(){
         setUpView()
         setUpConstraints()
@@ -64,8 +102,8 @@ class HomeView : UIView {
     private func setUpView(){
         
         let img = UIImage(named: "background")!
-        backgroundImageView.image = img
-        backgroundImageView.contentMode = .scaleToFill
+        backgroundImageView.image = img.scalePreservingAspectRatio(targetSize: CGSize(width: UIScreen.main.bounds.width*8, height: UIScreen.main.bounds.height))
+        backgroundImageView.contentMode = .scaleAspectFit
         insertSubview(backgroundImageView, at: 0)
         
         weatherIcon.image = UIImage(systemName: iconName)
@@ -81,6 +119,8 @@ class HomeView : UIView {
         addSubview(settingsButton)
         
         temperatureLabel.text = "21°C"
+        temperatureLabel.adjustsFontSizeToFitWidth = true
+        temperatureLabel.textAlignment = .right
         temperatureLabel.font = UIFont.systemFont(ofSize: 100, weight: .bold)
         temperatureLabel.contentMode = .scaleAspectFit
         addSubview(temperatureLabel)
@@ -98,131 +138,40 @@ class HomeView : UIView {
         bottomView.addSubview(detialsStackView)
     }
     
-    @objc private func searchTapped(){
-        
-        print("Search tapped!")
-        searchButtonPressed?()
-    }
-    
-    @objc private func settingsTapped(){
-        
-         print("Settings tapped!")
-         settingsButtonPressed?()
-    }
-    
-    private func setUpMinMaxStack(){
-        
-        minTemperatureLabel.text = "min \n 14.5°C"
-        minTemperatureLabel.textAlignment = .center
-        minTemperatureLabel.numberOfLines = 0
-        minTemperatureLabel.font = UIFont.systemFont(ofSize: normalFontSize)
-        maxTemperatureLabel.numberOfLines = 0
-        maxTemperatureLabel.text = "max \n 31.2°C"
-        maxTemperatureLabel.textAlignment = .center
-        maxTemperatureLabel.font = UIFont.systemFont(ofSize: normalFontSize)
-        
-        minTemperatureLabel.sizeToFit()
-        maxTemperatureLabel.sizeToFit()
-        
-        minMaxStackView.addArrangedSubview(minTemperatureLabel)
-        minMaxStackView.addArrangedSubview(maxTemperatureLabel)
-        minMaxStackView.alignment = .center
-        minMaxStackView.distribution = .fillEqually
-        
-    }
-    
-    private func setUpDetailsStack(){
-        
-        let downAttributes :  [NSAttributedString.Key : Any] =
-            [
-                .font : UIFont.systemFont(ofSize: normalFontSize - 4, weight: .bold),
-                .foregroundColor : UIColor.white
-            ]
-        
-        let upAttributes :  [NSAttributedString.Key : Any]  =
-            [
-                .font : UIFont.systemFont(ofSize: normalFontSize - 8),
-                .foregroundColor : UIColor.white
-            ]
-        
-        let humidityAS =
-            NSMutableAttributedString(string: "Humidity \n 0.79 %")
-        humidityAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
-        humidityAS.addAttributes(downAttributes,range: NSRange(location: 8,length: 9))
-        humidityLabel.attributedText = humidityAS
-        humidityLabel.numberOfLines = 2
-        humidityLabel.textAlignment = .center
-        humidityLabel.sizeToFit()
-        
-        let pressureAS =
-            NSMutableAttributedString(string: "Pressure \n 1016.7 hpa")
-        pressureAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
-        pressureAS.addAttributes(downAttributes,range: NSRange(location: 8, length: 13))
-        pressureLabel.attributedText = pressureAS
-        pressureLabel.numberOfLines = 2
-        pressureLabel.textAlignment = .center
-        pressureLabel.sizeToFit()
-        
-        let windAS =
-            NSMutableAttributedString(string:"Wind \n 4.34 mph")
-        windAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 4))
-        windAS.addAttributes(downAttributes,range: NSRange(location: 5, length: 10))
-        windLabel.attributedText = windAS
-        windLabel.numberOfLines = 2
-        windLabel.textAlignment = .center
-        windLabel.sizeToFit()
-
-        
-        detialsStackView.addArrangedSubview(humidityLabel)
-        detialsStackView.addArrangedSubview(pressureLabel)
-        detialsStackView.addArrangedSubview(windLabel)
-        detialsStackView.alignment = .bottom
-        detialsStackView.distribution = .fillEqually
-        
-    }
-    
     private func setUpConstraints(){
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         
+        backgroundImageView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+           // make.left.right.greaterThanOrEqualToSuperview()
+        }
         searchButton.snp.makeConstraints { make in
             make.width.height.equalTo(44)
             make.top.equalTo(safeAreaLayoutGuide).offset(10)
             make.left.equalTo(safeAreaLayoutGuide).offset(40)
         }
-        
         settingsButton.snp.makeConstraints { make in
             make.top.width.height.equalTo(searchButton)
             make.left.equalTo(searchButton.snp.right).offset(20)
         }
-        
-        
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(searchButton.snp.bottom).offset(60)
             make.trailing.equalToSuperview().inset(10)
-            //make.height.equalTo(160)
+            make.width.equalToSuperview().inset(40)
         }
-        
         weatherIcon.snp.makeConstraints { make in
             make.top.equalTo(self).inset(40)
             make.right.equalTo(safeAreaLayoutGuide).inset(30)
             make.bottom.equalTo(temperatureLabel.snp.top).inset(-30)
             make.width.equalTo(weatherIcon.snp.height)
         }
-        
         cityNameLabel.snp.makeConstraints { make in
             make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
             make.trailing.equalTo(temperatureLabel)
         }
-        
-        
         bottomView.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(safeAreaLayoutGuide)
             make.top.equalTo(cityNameLabel.snp.bottom).offset(50)
         }
-        
-        
         minMaxStackView.snp.makeConstraints { make in
             make.left.right.top.equalTo(bottomView)
             make.height.equalTo(UIScreen.main.bounds.height * 0.24)
@@ -234,8 +183,103 @@ class HomeView : UIView {
         }
 
     }
+        
     
+}
+
+extension HomeView {
     
+    //MARK: - View Setup
+    private func setUpMinMaxStack(){
+        
+        minTemperatureLabel.text = "min \n 14.5°C"
+        minTemperatureLabel.textAlignment = .center
+        minTemperatureLabel.numberOfLines = 0
+        minTemperatureLabel.font = UIFont.systemFont(ofSize: normalFontSize)
+        minTemperatureLabel.sizeToFit()
+        
+        maxTemperatureLabel.numberOfLines = 0
+        maxTemperatureLabel.text = "max \n 31.2°C"
+        maxTemperatureLabel.textAlignment = .center
+        maxTemperatureLabel.font = UIFont.systemFont(ofSize: normalFontSize)
+        maxTemperatureLabel.sizeToFit()
+        
+        minMaxStackView.addArrangedSubview(minTemperatureLabel)
+        minMaxStackView.addArrangedSubview(maxTemperatureLabel)
+        minMaxStackView.alignment = .center
+        minMaxStackView.distribution = .fillEqually
+        
+    }
+    
+    private func setUpDetailsStack(){
+        
+        let humidityAS = makeHumidityAttributedString(humidity: 0.64)
+        humidityLabel.attributedText = humidityAS
+        humidityLabel.numberOfLines = 2
+        humidityLabel.textAlignment = .center
+        humidityLabel.sizeToFit()
+        pressureLabel.adjustsFontSizeToFitWidth = true
+
+        let pressureAS = makePressureAttributedString(pressure: 1062.4)
+        pressureLabel.attributedText = pressureAS
+        pressureLabel.numberOfLines = 2
+        pressureLabel.textAlignment = .center
+        pressureLabel.sizeToFit()
+        pressureLabel.adjustsFontSizeToFitWidth = true
+        
+        let windAS = makeWindAttributedString(wind: 44)
+        windLabel.attributedText = windAS
+        windLabel.numberOfLines = 2
+        windLabel.textAlignment = .center
+        windLabel.sizeToFit()
+        pressureLabel.adjustsFontSizeToFitWidth = true
+
+        detialsStackView.addArrangedSubview(humidityLabel)
+        detialsStackView.addArrangedSubview(pressureLabel)
+        detialsStackView.addArrangedSubview(windLabel)
+        detialsStackView.alignment = .bottom
+        detialsStackView.distribution = .fillEqually
+        
+    }
+    
+}
+
+extension HomeView {
+    
+    //MARK: - Callbacks
+    @objc private func searchTapped(){
+        searchButtonPressed?()
+    }
+    
+    @objc private func settingsTapped(){
+         settingsButtonPressed?()
+    }
+    
+}
+
+extension HomeView {
+    
+    //MARK: - Attributed Strings
+    fileprivate func makeHumidityAttributedString(humidity: Double) -> NSMutableAttributedString {
+        let humidityAS = NSMutableAttributedString(string: "Humidity \n \(humidity) %")
+        humidityAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
+        humidityAS.addAttributes(downAttributes,range: NSRange(location: 8,length: humidityAS.string.count-8))
+        return humidityAS
+    }
+    
+    fileprivate func makePressureAttributedString(pressure: Double) -> NSMutableAttributedString {
+        let pressureAS = NSMutableAttributedString(string: "Pressure \n \(pressure) hpa")
+        pressureAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
+        pressureAS.addAttributes(downAttributes,range: NSRange(location: 8, length: pressureAS.string.count-8))
+        return pressureAS
+    }
+    
+    fileprivate func makeWindAttributedString(wind: Double) -> NSMutableAttributedString {
+        let windAS = NSMutableAttributedString(string:"Wind \n \(wind) mph")
+        windAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 4))
+        windAS.addAttributes(downAttributes,range: NSRange(location: 5, length: windAS.string.count-5))
+        return windAS
+    }
     
 }
 

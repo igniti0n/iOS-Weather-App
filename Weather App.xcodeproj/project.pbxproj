@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C089DF026E2B2EF00295E6E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C089DEF26E2B2EF00295E6E /* LocationService.swift */; };
+		2C089DF226E2B7FD00295E6E /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C089DF126E2B7FD00295E6E /* TypeAliases.swift */; };
+		2C089DF426E4317800295E6E /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C089DF326E4317800295E6E /* SearchTableViewCell.swift */; };
 		2C1E0DB326DE8CA900DC2412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DB226DE8CA900DC2412 /* AppDelegate.swift */; };
 		2C1E0DB526DE8CA900DC2412 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DB426DE8CA900DC2412 /* SceneDelegate.swift */; };
 		2C1E0DBC26DE8CAC00DC2412 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C1E0DBB26DE8CAC00DC2412 /* Assets.xcassets */; };
@@ -35,13 +38,18 @@
 		2C6CB2E326E0BF4A00806BAD /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E226E0BF4A00806BAD /* SearchCoordinator.swift */; };
 		2C6CB2E526E0D16D00806BAD /* NavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E426E0D16D00806BAD /* NavigationBarExtension.swift */; };
 		2C6CB2E726E0EFC400806BAD /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E626E0EFC400806BAD /* CheckButton.swift */; };
-		2C6CB2E926E1070C00806BAD /* TextFieldPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2E826E1070C00806BAD /* TextFieldPadding.swift */; };
-		2C6CB2EB26E10B8700806BAD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2EA26E10B8700806BAD /* Constants.swift */; };
 		2C6CB2EE26E11B0300806BAD /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2ED26E11B0300806BAD /* Settings.swift */; };
+		2C6CB2F026E2556F00806BAD /* NetworkWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2EF26E2556F00806BAD /* NetworkWeatherService.swift */; };
+		2C6CB2F226E25BDA00806BAD /* ConnectionCheckerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2F126E25BDA00806BAD /* ConnectionCheckerService.swift */; };
+		2C6CB2F426E2659600806BAD /* ServicesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6CB2F326E2659600806BAD /* ServicesFactory.swift */; };
+		2CF4F96926E5FCFE00B6C932 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4F96826E5FCFE00B6C932 /* UIImageExtension.swift */; };
 		B6FD8B5D4D41B82A4EAB524A /* Pods_Weather_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A414344A5B1A61FC82A833 /* Pods_Weather_App.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C089DEF26E2B2EF00295E6E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		2C089DF126E2B7FD00295E6E /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		2C089DF326E4317800295E6E /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		2C1E0DAF26DE8CA900DC2412 /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C1E0DB226DE8CA900DC2412 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C1E0DB426DE8CA900DC2412 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,9 +80,11 @@
 		2C6CB2E226E0BF4A00806BAD /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		2C6CB2E426E0D16D00806BAD /* NavigationBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarExtension.swift; sourceTree = "<group>"; };
 		2C6CB2E626E0EFC400806BAD /* CheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButton.swift; sourceTree = "<group>"; };
-		2C6CB2E826E1070C00806BAD /* TextFieldPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPadding.swift; sourceTree = "<group>"; };
-		2C6CB2EA26E10B8700806BAD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C6CB2ED26E11B0300806BAD /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		2C6CB2EF26E2556F00806BAD /* NetworkWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeatherService.swift; sourceTree = "<group>"; };
+		2C6CB2F126E25BDA00806BAD /* ConnectionCheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCheckerService.swift; sourceTree = "<group>"; };
+		2C6CB2F326E2659600806BAD /* ServicesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesFactory.swift; sourceTree = "<group>"; };
+		2CF4F96826E5FCFE00B6C932 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		6F31620FF3566A817E728065 /* Pods-Weather App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather App.release.xcconfig"; path = "Target Support Files/Pods-Weather App/Pods-Weather App.release.xcconfig"; sourceTree = "<group>"; };
 		C22CF3AF6DD10599F2D058A2 /* Pods-Weather App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather App.debug.xcconfig"; path = "Target Support Files/Pods-Weather App/Pods-Weather App.debug.xcconfig"; sourceTree = "<group>"; };
 		F4A414344A5B1A61FC82A833 /* Pods_Weather_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,7 +171,7 @@
 			children = (
 				2C6CB2EC26E10B8F00806BAD /* Classes */,
 				2C1E0DD726DE927E00DC2412 /* Extensions */,
-				2C6CB2EA26E10B8700806BAD /* Constants.swift */,
+				2C089DF126E2B7FD00295E6E /* TypeAliases.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -169,6 +179,10 @@
 		2C1E0DC926DE8D5C00DC2412 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				2C6CB2EF26E2556F00806BAD /* NetworkWeatherService.swift */,
+				2C6CB2F126E25BDA00806BAD /* ConnectionCheckerService.swift */,
+				2C6CB2F326E2659600806BAD /* ServicesFactory.swift */,
+				2C089DEF26E2B2EF00295E6E /* LocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -188,6 +202,7 @@
 				2C1E0DD826DE927E00DC2412 /* ConstraintsExtension.swift */,
 				2C1E0DD926DE927F00DC2412 /* UIViewControllerExtension.swift */,
 				2C6CB2E426E0D16D00806BAD /* NavigationBarExtension.swift */,
+				2CF4F96826E5FCFE00B6C932 /* UIImageExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -200,6 +215,7 @@
 				2C6CB2D426E0BE4900806BAD /* SearchViewController.swift */,
 				2C6CB2D326E0BE4900806BAD /* SearchViewModel.swift */,
 				2C6CB2E226E0BF4A00806BAD /* SearchCoordinator.swift */,
+				2C089DF326E4317800295E6E /* SearchTableViewCell.swift */,
 			);
 			path = SearchVC;
 			sourceTree = "<group>";
@@ -231,7 +247,6 @@
 		2C6CB2EC26E10B8F00806BAD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2C6CB2E826E1070C00806BAD /* TextFieldPadding.swift */,
 				2C6CB2E626E0EFC400806BAD /* CheckButton.swift */,
 			);
 			path = Classes;
@@ -366,28 +381,33 @@
 				2C6CB2C626E0BE1B00806BAD /* HomeViewModel.swift in Sources */,
 				2C6CB2E526E0D16D00806BAD /* NavigationBarExtension.swift in Sources */,
 				2C6CB2D126E0BE2C00806BAD /* SettingsCoordinator.swift in Sources */,
+				2C6CB2F226E25BDA00806BAD /* ConnectionCheckerService.swift in Sources */,
 				2C6CB2D726E0BE4900806BAD /* SearchViewModel.swift in Sources */,
 				2C6CB2DB26E0BE6700806BAD /* Weather.swift in Sources */,
+				2C6CB2F426E2659600806BAD /* ServicesFactory.swift in Sources */,
+				2C089DF026E2B2EF00295E6E /* LocationService.swift in Sources */,
 				2C6CB2D026E0BE2C00806BAD /* SettingsView.swift in Sources */,
 				2C6CB2CF26E0BE2C00806BAD /* SettingsViewModel.swift in Sources */,
+				2C089DF426E4317800295E6E /* SearchTableViewCell.swift in Sources */,
 				2C6CB2C426E0BE1B00806BAD /* HomeViewController.swift in Sources */,
 				2C1E0DDA26DE927F00DC2412 /* ConstraintsExtension.swift in Sources */,
+				2C089DF226E2B7FD00295E6E /* TypeAliases.swift in Sources */,
+				2C6CB2F026E2556F00806BAD /* NetworkWeatherService.swift in Sources */,
 				2C6CB2EE26E11B0300806BAD /* Settings.swift in Sources */,
 				2C6CB2D926E0BE4900806BAD /* SearchView.swift in Sources */,
 				2C6CB2D826E0BE4900806BAD /* SearchViewController.swift in Sources */,
 				2C1E0DCE26DE8D9D00DC2412 /* Coordinator.swift in Sources */,
 				2C1E0DD026DE8DFB00DC2412 /* RootCoordinator.swift in Sources */,
-				2C6CB2E926E1070C00806BAD /* TextFieldPadding.swift in Sources */,
 				2C6CB2DD26E0BEC600806BAD /* ViewController.swift in Sources */,
 				2C6CB2E726E0EFC400806BAD /* CheckButton.swift in Sources */,
 				2C1E0DB326DE8CA900DC2412 /* AppDelegate.swift in Sources */,
+				2CF4F96926E5FCFE00B6C932 /* UIImageExtension.swift in Sources */,
 				2C1E0DDB26DE927F00DC2412 /* UIViewControllerExtension.swift in Sources */,
 				2C1E0DB526DE8CA900DC2412 /* SceneDelegate.swift in Sources */,
 				2C6CB2E326E0BF4A00806BAD /* SearchCoordinator.swift in Sources */,
 				2C6CB2C526E0BE1B00806BAD /* HomeView.swift in Sources */,
 				2C6CB2CD26E0BE2C00806BAD /* SettingsViewController.swift in Sources */,
 				2C6CB2E126E0BF1400806BAD /* HomeCoordinator.swift in Sources */,
-				2C6CB2EB26E10B8700806BAD /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

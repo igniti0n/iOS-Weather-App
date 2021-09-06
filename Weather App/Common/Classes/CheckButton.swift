@@ -8,8 +8,11 @@ import UIKit
 
 class CheckButton : UIButton {
 
-    var isChecked: Bool!
-    
+    var isChecked: Bool! {
+        didSet {
+            updateImage()
+        }
+    }
     private weak var oppositeCheckbox: CheckButton?
 
     required init( initialChecked : Bool) {
@@ -39,8 +42,6 @@ class CheckButton : UIButton {
     
     private func flipState() {
         isChecked.toggle()
-//        UserDefaults.standard.set(isChecked, forKey: userDefaultsKey)
-//        UserDefaults.standard.synchronize()
         updateImage()
     }
     

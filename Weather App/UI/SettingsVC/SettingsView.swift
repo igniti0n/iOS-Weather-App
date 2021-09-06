@@ -11,11 +11,7 @@ import SnapKit
 
 class SettingsView : UIView {
     
-    var celsiusButtonPressed : (()->Void)?
-    var fahrenheitButtonPressed : (()->Void)?
-    var humidityButtonPressed : (()->Void)?
-    var pressureButtonPressed : (()->Void)?
-    var windButtonPressed : (()->Void)?
+    var settingsChanged : ((Settings)->Void)?
     
     private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
     private lazy var topView = UIView()
@@ -38,6 +34,7 @@ class SettingsView : UIView {
     private lazy var pressureStackView = UIStackView()
     private lazy var windStackView = UIStackView()
     
+    private let normalFontSize : CGFloat = 30.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,6 +45,17 @@ class SettingsView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateView(settings: Settings){
+        
+        print("Updating view! \n with: \n \(settings)")
+        celsiusCheckButton.isChecked = settings.isCelsius
+        fahrenhitCheckButton.isChecked = settings.isFarenheit
+        humidityCheckButton.isChecked = settings.showHumidity
+        pressureCheckButton.isChecked = settings.showPressure
+        windCheckButton.isChecked = settings.showWind
+        
+    }
+    
     private func setUp(){
         setUpView()
         setUpConstraints()
@@ -56,16 +64,18 @@ class SettingsView : UIView {
     private func setUpView(){
         
         let img = UIImage(named: "background")!
-        backgroundImageView.image = img
+        backgroundImageView.image = img.scalePreservingAspectRatio(targetSize: CGSize(width: UIScreen.main.bounds.width*8, height: UIScreen.main.bounds.height))
         backgroundImageView.contentMode = .scaleToFill
         insertSubview(backgroundImageView, at: 0)
-        
+        celsiusCheckButton.addTarget(self, action: #selector(celsiusPressed), for: .touchUpInside)
+        fahrenhitCheckButton.addTarget(self, action: #selector(fahrenheitPressed), for: .touchUpInside)
+        humidityCheckButton.addTarget(self, action: #selector(humidityPressed), for: .touchUpInside)
+        pressureCheckButton.addTarget(self, action: #selector(pressurePressed), for: .touchUpInside)
+        windCheckButton.addTarget(self, action: #selector(windPressed), for: .touchUpInside)
         setUpTopStack()
         setUpBottomStack()
-        
         topView.addSubview(celsiusStackView)
         topView.addSubview(fahrenhitStackView)
-        
         bottomStackView.alignment = .center
         bottomStackView.distribution = .equalCentering
         bottomStackView.addArrangedSubview(humidityStackView)
@@ -138,56 +148,47 @@ class SettingsView : UIView {
     
     private func setUpConstraints(){
         
+        backgroundImageView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+        }
         celsiusCheckButton.snp.makeConstraints { make in
             make.width.equalTo(celsiusCheckButton.snp.height)
         }
-        
         topView.snp.makeConstraints { make in
             make.top.left.right.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(UIScreen.main.bounds.height * 0.4)
         }
-        
         fahrenhitStackView.snp.makeConstraints { make in
             make.bottom.equalTo(topView).inset(80)
             make.left.equalTo(topView).inset(35)
         }
-        
         celsiusStackView.snp.makeConstraints { make in
             make.left.equalTo(fahrenhitStackView)
             make.bottom.equalTo(fahrenhitStackView.snp.top).inset(-30)
         }
-        
         //bottom
-        
         bottomStackView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
             make.left.right.bottom.equalTo(safeAreaLayoutGuide).inset(60)
         }
-        
         fahrenhitCheckButton.snp.makeConstraints { make in
             make.width.height.equalTo(celsiusCheckButton)
         }
-        
         humidityCheckButton.snp.makeConstraints { make in
             make.height.width.equalTo(celsiusCheckButton)
         }
-        
         pressureCheckButton.snp.makeConstraints { make in
             make.height.width.equalTo(celsiusCheckButton)
         }
-        
         windCheckButton.snp.makeConstraints { make in
             make.height.width.equalTo(celsiusCheckButton)
         }
-        
         wind.snp.makeConstraints { make in
             make.width.height.equalTo(80)
         }
-        
         pressure.snp.makeConstraints { make in
             make.width.height.equalTo(80)
         }
-        
         humidity.snp.makeConstraints { make in
             make.width.height.equalTo(80)
         }
@@ -198,25 +199,33 @@ class SettingsView : UIView {
 
 extension SettingsView {
     
+    //MARK: - CALLBACKS
     @objc private func celsiusPressed(){
-        print("H pressed!")
-        celsiusButtonPressed?()
+        settingsChanged?(currentSettings())
     }
     @objc private func fahrenheitPressed(){
-        print("F pressed!")
-        fahrenheitButtonPressed?()
+        settingsChanged?(currentSettings())
     }
     @objc private func humidityPressed(){
-        print("humi pressed!")
-        humidityButtonPressed?()
+        settingsChanged?(currentSettings())
     }
     @objc private func pressurePressed(){
-        print("pres pressed!")
-        pressureButtonPressed?()
+        settingsChanged?(currentSettings())
     }
     @objc private func windPressed(){
-        print("wind pressed!")
-        windButtonPressed?()
+        settingsChanged?(currentSettings())
+    }
+    
+    fileprivate func currentSettings()->Settings{
+        
+        Settings(
+            isCelsius: celsiusCheckButton.isChecked,
+            isFarenheit: fahrenhitCheckButton.isChecked,
+            showHumidity: humidityCheckButton.isChecked,
+            showPressure: pressureCheckButton.isChecked,
+            showWind: windCheckButton.isChecked
+        )
+        
     }
     
 }

@@ -16,36 +16,36 @@ class HomeCoordinator : Coordinator {
     let navigationController = UINavigationController()
     
     func start() -> UIViewController {
+        
         let vc = createHomeVC()
-       
         navigationController.showAsRoot()
         navigationController.navigationBar.setTransparent()
         navigationController.navigationBar.barStyle = .black
         navigationController.navigationBar.tintColor = UIColor.black
         navigationController.pushViewController(vc, animated: true)
         return navigationController
+        
     }
     
    
     
     private func createHomeVC() -> UIViewController{
-        let vc = HomeViewController()
-        let vm = HomeViewModel()
         
+        let vc = HomeViewController()
+        let locationService = ServiceFactory.locationService
+        locationService.setDelegate(vc: vc)
+        let vm = HomeViewModel(locationService: locationService, networkService: ServiceFactory.networkWeatherService)
         vm.settingsPressed = {
             [weak self] in
             self?.showSettingsVC()
         }
-        
         vm.searchPressed = {
             [weak self] in
             self?.showSearchVC()
         }
-        
-        
-        
         vc.homeViewModel = vm
         return vc
+        
     }
     
     private func showSettingsVC(){

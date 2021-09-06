@@ -7,5 +7,6 @@ target 'Weather App' do
 
   # Pods for Weather App
   pod 'SnapKit', '~> 5.0.0'
+  pod 'Alamofire', '~> 5.4'
 
 end

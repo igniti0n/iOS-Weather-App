@@ -20,21 +20,27 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-
-        // Do any additional setup after loading the view.
+        addCallbacks()
+        settingsViewModel?.readSettingsFromDefaults()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillDisappear(_ animated: Bool) {
+        settingsViewModel?.saveSettingsToDefaults()
     }
-    */
-
+    
+    fileprivate func addCallbacks(){
+        
+        settingsView.settingsChanged = {
+            [weak self] settings in
+            self?.settingsViewModel?.settingsChanged(newSettings: settings)
+        }
+        settingsViewModel?.onSettingsLoaded = {
+            [weak self] settings in
+            DispatchQueue.main.async {
+                self?.settingsView.updateView(settings: settings)
+            }
+        }
+        
+    }
+    
 }

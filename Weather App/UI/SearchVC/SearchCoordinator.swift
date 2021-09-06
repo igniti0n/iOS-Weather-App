@@ -14,7 +14,7 @@ import  UIKit
  */
 
 class SearchCoordinator : Coordinator {
-    
+        
     func start() -> UIViewController {
         let vc = createSearchVC()
        
@@ -25,8 +25,9 @@ class SearchCoordinator : Coordinator {
     
     private func createSearchVC() -> UIViewController{
         let vc = SearchViewController()
+        let vm = SearchViewModel(networkWeatherService: ServiceFactory.networkWeatherService)
         
-        
+        vc.searchViewModel = vm
         return vc
     }
     

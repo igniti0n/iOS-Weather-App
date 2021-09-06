@@ -11,14 +11,16 @@ import SnapKit
 
 class SearchView : UIView {
     
-    private lazy var backgroundImageView = UIImageView()
-    
-    private lazy var searchField = TextFieldPadding()
-    private lazy var searchButton = UIButton()
-    
-    private lazy var tableView = UITableView()
-    
     var tableDelegate : UITableViewDelegate?
+    var tableDataDelegate : UITableViewDataSource?
+    var onSearchPressed: ((String)->Void)?
+    
+    private lazy var backgroundImageView = UIImageView()
+    private lazy var searchField = UITextField()
+    private lazy var searchButton = UIButton()
+    public var tableView = UITableView()
+    
+    private let normalFontSize : CGFloat = 30.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,12 +39,14 @@ class SearchView : UIView {
     private func setUpView(){
         
         let img = UIImage(named: "background")!
-        backgroundImageView.image = img
+        backgroundImageView.image = img.scalePreservingAspectRatio(targetSize: CGSize(width: UIScreen.main.bounds.width*8, height: UIScreen.main.bounds.height))
         backgroundImageView.contentMode = .scaleToFill
         insertSubview(backgroundImageView, at: 0)
         
         searchField.placeholder = "Search"
         searchField.font = UIFont.systemFont(ofSize: normalFontSize)
+        searchField.bounds.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
+        //searchField.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         searchField.backgroundColor = .lightGray.withAlphaComponent(0.7)
         searchField.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         searchField.layer.cornerRadius = 4
@@ -50,10 +54,12 @@ class SearchView : UIView {
         addSubview(searchField)
         
         searchButton.setImage(UIImage(named: "search"), for: .normal)
+        searchButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
         addSubview(searchButton)
         
-        tableView.delegate = tableDelegate
-        tableView.backgroundColor = nil
+        tableView.allowsSelection = true
+        tableView.backgroundColor = UIColor.clear
+        tableView.layer.backgroundColor = UIColor.clear.cgColor
         tableView.separatorStyle = .none
         addSubview(tableView)
         
@@ -62,29 +68,33 @@ class SearchView : UIView {
     private func setUpConstraints(){
         
         backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
         }
-        
         searchField.snp.makeConstraints { make in
             make.left.right.equalTo(safeAreaLayoutGuide).inset(80)
             make.top.equalTo(safeAreaLayoutGuide).inset(40)
-           // make.height.equalTo(50)
         }
-        
         searchButton.snp.makeConstraints { make in
             make.left.equalTo(searchField.snp.right)
             make.top.bottom.equalTo(searchField)
             make.right.equalTo(safeAreaLayoutGuide)
         }
-        
         tableView.snp.makeConstraints { make in
-            make.left.right.bottom.equalTo(safeAreaLayoutGuide).inset(80)
-            make.top.equalTo(searchField.snp.bottom)
+            make.left.right.equalTo(searchField)
+            make.bottom.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(searchField.snp.bottom).offset(20)
         }
         
-        
-        
-        
+    }
+    
+}
+
+extension SearchView {
+    
+    //MARK: - Callbacks
+    @objc fileprivate func searchPressed(){
+        guard let text = searchField.text else {return}
+        onSearchPressed?(text)
     }
     
 }
