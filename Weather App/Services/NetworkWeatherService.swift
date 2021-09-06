@@ -8,7 +8,6 @@
 import Foundation
 
 public enum NetworkError: String, Error {
-    
     case noInternet = "There is no connection."
     case emptyResponse = "No data recieved from the response."
     case networkError = "There seems to be a problem with fetching data."
@@ -20,10 +19,8 @@ public enum NetworkError: String, Error {
 
 
 protocol NetworkWeatherServiceProtocol {
-    
     func fetchWeatherCity(city: String, completion: @escaping (Result<Weather, NetworkError>) -> Void)
     func fetchWeatherLocation(lat: Double, long: Double, completion: @escaping (Result<Weather, NetworkError>) -> Void)
-    
 }
 
 /*
@@ -35,7 +32,6 @@ protocol NetworkWeatherServiceProtocol {
 */
 
 final class NetworkWeatherService: NetworkWeatherServiceProtocol {
-    
     private let connectivityCheckerService: ConnectionCheckerServiceProtocol
     private let baseUrl = "https://api.openweathermap.org/data/2.5/weather"
     private let apiKey = "33a595b1052037a58ebbd6503b0303ac"
@@ -45,18 +41,15 @@ final class NetworkWeatherService: NetworkWeatherServiceProtocol {
     }
     
     func fetchWeatherCity(city: String, completion: @escaping (Result<Weather, NetworkError>) -> Void){
-        
         var components = URLComponents(string: baseUrl)!
         components.queryItems = [
             URLQueryItem(name: "q", value: city),
             URLQueryItem(name: "appid", value: apiKey)
         ]
-        fetchWeather(components: components, completion: completion)
-        
+        fetchWeatherFromNetwork(components: components, completion: completion)
     }
     
     func fetchWeatherLocation(lat: Double, long: Double, completion: @escaping (Result<Weather, NetworkError>) -> Void){
-        
         var components = URLComponents(string: baseUrl)!
         components.queryItems = [
             URLQueryItem(name: "lat", value: String(lat)),
@@ -67,19 +60,21 @@ final class NetworkWeatherService: NetworkWeatherServiceProtocol {
             completion(.success(savedWeather))
             return
         }
-        fetchWeather(components: components, completion: completion)
+        fetchWeatherFromNetwork(components: components, completion: completion)
         
     }
     
-    fileprivate func fetchWeather(components: URLComponents, completion: @escaping (Result<Weather, NetworkError>) -> Void) {
-        
+}
+
+fileprivate extension NetworkWeatherService {
+    //MARK:- Fetching weather
+    func fetchWeatherFromNetwork(components: URLComponents, completion: @escaping (Result<Weather, NetworkError>) -> Void) {
         guard
         connectivityCheckerService.isConnected == true
         else {
             completion(.failure(.noInternet))
             return
         }
-        
         var request = URLRequest(url: components.url!)
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -105,9 +100,7 @@ final class NetworkWeatherService: NetworkWeatherServiceProtocol {
         }
         task.resume()
     }
-    
-    fileprivate func fetchWeatherFromDefaults()-> Weather?{
-        
+    func fetchWeatherFromDefaults()-> Weather?{
         let defaults = UserDefaults.standard
         if let savedWeather = defaults.object(forKey: "weather") as? Data {
             if let decodedWeather = try? JSONDecoder().decode(Weather.self, from: savedWeather) {
@@ -115,7 +108,6 @@ final class NetworkWeatherService: NetworkWeatherServiceProtocol {
             }
         }
         return nil
-        
     }
     
 }

@@ -10,8 +10,11 @@ import Foundation
 
 class HomeViewModel {
     
+    var currentlyDisplayingWeather: Weather?
     var settingsPressed: EmptyCallback?
     var searchPressed: EmptyCallback?
+    var onSettingsScreenExited: ((Weather, Settings)->Void)?
+    var onSearchWeatherFetch: ((Weather)->Void)?
     var onActivityStarted: EmptyCallback?
     var onActivityEnded: EmptyCallback?
     var onFetchSucces: ((Weather, Settings)->Void)?
@@ -25,20 +28,28 @@ class HomeViewModel {
         self.locationService = locationService
     }
     
+    func requestLoactionPermission(){
+        locationService.requestPermission()
+    }
+    
+    func deleteWeatherFromDefaults(){
+        let defaults = UserDefaults.standard
+        print("removing weather from defaults....")
+        defaults.removeObject(forKey: "weather")
+    }
+    
     func fetchWeather(){
-        
         let settings = readSettingsFromDefaults() ?? Settings.defaultSettings()
-       
-        var savedWeather = readWeatherFromDefaults()
-        if savedWeather != nil {
+        let savedWeather = readWeatherFromDefaults()
+        if var savedWeather = savedWeather {
+            print("Found save weather!")
             if settings.isCelsius == true {
-                changeToCelsius(weather: &savedWeather!)
+                changeToCelsius(weather: &savedWeather)
             }
-            self.onFetchSucces?(savedWeather!, settings)
+            currentlyDisplayingWeather = savedWeather
+            onFetchSucces?(savedWeather, settings)
             return
         }
-        print("No saved weather found. Getting form location....")
-        locationService.requestPermission()
         let location = locationService.fetchCurrentLocation()
         onActivityStarted?()
         networkWeatherService.fetchWeatherLocation(lat: location.coordinate.latitude, long: location.coordinate.longitude) {
@@ -50,65 +61,62 @@ class HomeViewModel {
                 if settings.isCelsius == true {
                     self?.changeToCelsius(weather: &weather)
                 }
+                self?.currentlyDisplayingWeather = weather
                 self?.onFetchSucces?(weather, settings)
             case .failure(let error):
                 print(error)
                 self?.onFetchFail?(error.rawValue)
             }
         }
-        
-    }
-    fileprivate func fahrenheitToCelsius(fahrenheit: Double) -> Double{
-        
-        let celsius = (fahrenheit - 273.15)
-        return round(celsius * 100)/100
-        
-    }
-    fileprivate func changeToCelsius( weather: inout Weather){
-        
-        weather.temperature = fahrenheitToCelsius(fahrenheit: weather.temperature)
-        weather.minTemperature = fahrenheitToCelsius(fahrenheit: weather.minTemperature)
-        weather.maxTemperature = fahrenheitToCelsius(fahrenheit: weather.maxTemperature)
-        
-    }
     
+    }
 }
 
 extension HomeViewModel {
     // MARK: - Navigation
-    public func onSearchPressed(){
+    func onSearchPressed() {
         searchPressed?()
     }
-    
-    public func onSettingsPressed(){
+    func onSettingsPressed() {
         settingsPressed?()
     }
-    
+    func onSettingsScreenExited(newSettings: Settings) {
+        guard var currentWeather = currentlyDisplayingWeather else {return}
+        let shouldChangeToCelsius = newSettings.isCelsius && currentWeather.temperature > 100
+        let shouldChangeToFahrenheit = newSettings.isFarenheit && currentWeather.temperature < 100
+        if shouldChangeToCelsius {
+            changeToCelsius(weather: &currentWeather)
+            currentlyDisplayingWeather = currentWeather
+        }else if shouldChangeToFahrenheit {
+            changeToFahrenheit(weather: &currentWeather)
+            currentlyDisplayingWeather = currentWeather
+        }
+        onFetchSucces?(currentWeather, newSettings)
+    }
+    func onSearchWeatherFetch(weather: Weather) {
+        currentlyDisplayingWeather = weather
+        guard var currentWeather = currentlyDisplayingWeather else {return}
+        let settings = readSettingsFromDefaults() ?? Settings.defaultSettings()
+        if settings.isCelsius {
+            changeToCelsius(weather: &currentWeather)
+        }
+        onSearchWeatherFetch?(currentWeather)
+    }
 }
 
-//MARK: - Cashing
 extension HomeViewModel {
-    
-    func deleteWeatherFromDefaults(){
-        
-        let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: "weather")
-        
-    }
-    fileprivate func readWeatherFromDefaults() -> Weather?{
-        
+    //MARK: - Cashing
+     func readWeatherFromDefaults() -> Weather? {
         let defaults = UserDefaults.standard
         guard
         let encodedData = defaults.value(forKey: "weather") as? Data
         else {
-            print("Converting to data filed :(")
+            print("Failed to read weather data from defaults.")
             return nil
         }
         return Weather.fromData(data: encodedData)
-        
     }
-    fileprivate func readSettingsFromDefaults() -> Settings?{
-        
+    func readSettingsFromDefaults() -> Settings? {
         let defaults = UserDefaults.standard
         guard
         let encodedData = defaults.value(forKey: "settings") as? Data
@@ -117,7 +125,27 @@ extension HomeViewModel {
             return nil
         }
         return Settings.fromData(data: encodedData)
-        
     }
-    
+}
+
+fileprivate extension HomeViewModel {
+    //MARK: - TEMPERATURE CONVERSION
+    func changeToCelsius( weather: inout Weather){
+        weather.temperature = fahrenheitToCelsius(fahrenheit: weather.temperature)
+        weather.minTemperature = fahrenheitToCelsius(fahrenheit: weather.minTemperature)
+        weather.maxTemperature = fahrenheitToCelsius(fahrenheit: weather.maxTemperature)
+    }
+    func changeToFahrenheit( weather: inout Weather){
+        weather.temperature = celsiusToFahrenheit(celsius: weather.temperature)
+        weather.minTemperature = celsiusToFahrenheit(celsius: weather.minTemperature)
+        weather.maxTemperature = celsiusToFahrenheit(celsius: weather.maxTemperature)
+    }
+    func fahrenheitToCelsius(fahrenheit: Double) -> Double {
+        let celsius = (fahrenheit - 273.15)
+        return round(celsius * 100)/100
+    }
+    func celsiusToFahrenheit(celsius: Double) -> Double {
+        let fahrenheit = (celsius + 273.15)
+        return round(fahrenheit * 100)/100
+    }
 }

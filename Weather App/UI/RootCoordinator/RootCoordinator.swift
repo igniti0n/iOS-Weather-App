@@ -23,11 +23,9 @@ class RootCoordinator : Coordinator {
     }
     
     private func createHomeVC() -> UIViewController{
-        
         let homeCoordinator = HomeCoordinator()
         childCoordinator = homeCoordinator
         return homeCoordinator.start()
-        
     }
     
 }

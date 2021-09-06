@@ -68,9 +68,8 @@ class HomeView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func updateWeatherView(weather: Weather, settings: Settings){
-        
-        let messurmentUnit = settings.isCelsius ? "°C" : "°F"
+    public func updateWeatherView(weather: Weather){
+        let messurmentUnit = weather.temperature < 100 ? "°C" : "°F"
         temperatureLabel.text = "\(weather.temperature)\(messurmentUnit)"
         minTemperatureLabel.text = "min \n \(weather.minTemperature)\(messurmentUnit)"
         maxTemperatureLabel.text = "max \n \(weather.maxTemperature)\(messurmentUnit)"
@@ -78,20 +77,21 @@ class HomeView : UIView {
         conditionId = weather.conditionId
         weatherIcon.image = UIImage(systemName: iconName)
         humidityLabel.attributedText = makeHumidityAttributedString(humidity: weather.humidity)
-        humidityLabel.isHidden = !settings.showHumidity
         pressureLabel.attributedText = makePressureAttributedString(pressure: weather.pressure)
-        pressureLabel.isHidden = !settings.showPressure
         windLabel.attributedText = makeWindAttributedString(wind: weather.windSpeed)
-        windLabel.isHidden = !settings.showWind
-        
     }
     
-    public func updateSettings(settings: Settings){
-        
-        humidityLabel.isHidden = settings.showHumidity
-        pressureLabel.isHidden = settings.showPressure
-        windLabel.isHidden = settings.showWind
-        
+    public func updateWeatherSettings(settings: Settings){
+        let messurmentUnit = settings.isCelsius ? "°C" : "°F"
+        temperatureLabel.text?.removeLast(2)
+        temperatureLabel.text? += messurmentUnit
+        minTemperatureLabel.text?.removeLast(2)
+        minTemperatureLabel.text? += messurmentUnit
+        maxTemperatureLabel.text?.removeLast(2)
+        maxTemperatureLabel.text? += messurmentUnit
+        humidityLabel.isHidden = !settings.showHumidity
+        pressureLabel.isHidden = !settings.showPressure
+        windLabel.isHidden = !settings.showWind
     }
     
     private func setUp(){
@@ -105,41 +105,32 @@ class HomeView : UIView {
         backgroundImageView.image = img.scalePreservingAspectRatio(targetSize: CGSize(width: UIScreen.main.bounds.width*8, height: UIScreen.main.bounds.height))
         backgroundImageView.contentMode = .scaleAspectFit
         insertSubview(backgroundImageView, at: 0)
-        
         weatherIcon.image = UIImage(systemName: iconName)
         weatherIcon.tintColor = UIColor(red: (30/255.0), green: (67/255.0), blue: (71/255.0), alpha: 1.0)
         addSubview(weatherIcon)
-      
         searchButton.setImage(UIImage(named: "search")!, for: .normal)
         searchButton.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
         addSubview(searchButton)
-        
         settingsButton.setImage(UIImage(named: "settings")!, for: .normal)
         settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
         addSubview(settingsButton)
-        
         temperatureLabel.text = "21°C"
         temperatureLabel.adjustsFontSizeToFitWidth = true
         temperatureLabel.textAlignment = .right
         temperatureLabel.font = UIFont.systemFont(ofSize: 100, weight: .bold)
         temperatureLabel.contentMode = .scaleAspectFit
         addSubview(temperatureLabel)
-        
         cityNameLabel.text = "London"
         cityNameLabel.font = UIFont.systemFont(ofSize: normalFontSize)
         addSubview(cityNameLabel)
-        
         setUpMinMaxStack()
         setUpDetailsStack()
-        
         addSubview(bottomView)
-       
         bottomView.addSubview(minMaxStackView)
         bottomView.addSubview(detialsStackView)
     }
     
     private func setUpConstraints(){
-        
         backgroundImageView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
            // make.left.right.greaterThanOrEqualToSuperview()
@@ -187,11 +178,9 @@ class HomeView : UIView {
     
 }
 
-extension HomeView {
-    
+fileprivate extension HomeView {
     //MARK: - View Setup
-    private func setUpMinMaxStack(){
-        
+    func setUpMinMaxStack(){
         minTemperatureLabel.text = "min \n 14.5°C"
         minTemperatureLabel.textAlignment = .center
         minTemperatureLabel.numberOfLines = 0
@@ -208,32 +197,27 @@ extension HomeView {
         minMaxStackView.addArrangedSubview(maxTemperatureLabel)
         minMaxStackView.alignment = .center
         minMaxStackView.distribution = .fillEqually
-        
     }
     
-    private func setUpDetailsStack(){
-        
+    func setUpDetailsStack(){
         let humidityAS = makeHumidityAttributedString(humidity: 0.64)
         humidityLabel.attributedText = humidityAS
         humidityLabel.numberOfLines = 2
         humidityLabel.textAlignment = .center
         humidityLabel.sizeToFit()
         pressureLabel.adjustsFontSizeToFitWidth = true
-
         let pressureAS = makePressureAttributedString(pressure: 1062.4)
         pressureLabel.attributedText = pressureAS
         pressureLabel.numberOfLines = 2
         pressureLabel.textAlignment = .center
         pressureLabel.sizeToFit()
         pressureLabel.adjustsFontSizeToFitWidth = true
-        
         let windAS = makeWindAttributedString(wind: 44)
         windLabel.attributedText = windAS
         windLabel.numberOfLines = 2
         windLabel.textAlignment = .center
         windLabel.sizeToFit()
         pressureLabel.adjustsFontSizeToFitWidth = true
-
         detialsStackView.addArrangedSubview(humidityLabel)
         detialsStackView.addArrangedSubview(pressureLabel)
         detialsStackView.addArrangedSubview(windLabel)
@@ -244,43 +228,39 @@ extension HomeView {
     
 }
 
-extension HomeView {
-    
+fileprivate extension HomeView {
     //MARK: - Callbacks
-    @objc private func searchTapped(){
+    @objc func searchTapped(){
         searchButtonPressed?()
     }
     
-    @objc private func settingsTapped(){
+    @objc func settingsTapped(){
          settingsButtonPressed?()
     }
-    
 }
 
-extension HomeView {
-    
+fileprivate extension HomeView {
     //MARK: - Attributed Strings
-    fileprivate func makeHumidityAttributedString(humidity: Double) -> NSMutableAttributedString {
+     func makeHumidityAttributedString(humidity: Double) -> NSMutableAttributedString {
         let humidityAS = NSMutableAttributedString(string: "Humidity \n \(humidity) %")
         humidityAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
         humidityAS.addAttributes(downAttributes,range: NSRange(location: 8,length: humidityAS.string.count-8))
         return humidityAS
     }
     
-    fileprivate func makePressureAttributedString(pressure: Double) -> NSMutableAttributedString {
+    func makePressureAttributedString(pressure: Double) -> NSMutableAttributedString {
         let pressureAS = NSMutableAttributedString(string: "Pressure \n \(pressure) hpa")
         pressureAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
         pressureAS.addAttributes(downAttributes,range: NSRange(location: 8, length: pressureAS.string.count-8))
         return pressureAS
     }
     
-    fileprivate func makeWindAttributedString(wind: Double) -> NSMutableAttributedString {
+    func makeWindAttributedString(wind: Double) -> NSMutableAttributedString {
         let windAS = NSMutableAttributedString(string:"Wind \n \(wind) mph")
         windAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 4))
         windAS.addAttributes(downAttributes,range: NSRange(location: 5, length: windAS.string.count-5))
         return windAS
     }
-    
 }
 
 

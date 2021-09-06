@@ -8,44 +8,36 @@
 import Foundation
 
 class SettingsViewModel {
-    
     var settings : Settings?
     var onSettingsLoaded: ((Settings)->Void)?
+    var onScreeExit: ((Settings)->Void)?
     
-    func settingsChanged(newSettings: Settings){
+    func settingsChanged(newSettings: Settings) {
         self.settings = newSettings
-        print("Settings changed: \n \(settings)")
-
     }
     
-    func saveSettingsToDefaults(){
-        
+    func saveSettingsToDefaults() {
         let defaults = UserDefaults.standard
         guard
-        let encodedData = try? JSONEncoder().encode(settings)
+        let encodedData = try? JSONEncoder().encode(settings),
+        let settings = settings
         else {
-            print("Converting settings to data filed :(")
             return
         }
-        print("Saving settings...")
         defaults.setValue(encodedData, forKey: "settings")
-        
+        onScreeExit?(settings)
     }
     
     func readSettingsFromDefaults(){
-        
         let defaults = UserDefaults.standard
         guard
         let encodedData = defaults.value(forKey: "settings") as? Data
         else {
-            print("Converting settings to data filed :(")
             return
         }
         let setFromData = Settings.fromData(data: encodedData)
-        print("Read settings from data: \(setFromData)")
         settings =  setFromData ?? Settings.defaultSettings()
         onSettingsLoaded?(settings!)
-        
     }
     
 }

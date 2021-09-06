@@ -11,9 +11,7 @@ class SearchViewController: UITableViewController {
 
     var searchViewModel : SearchViewModel!
     let searchView = SearchView()
-    
-    let temp = ["Berlin", "London", "Donji grad","Berlin", "London", "Donji grad"]
-    
+        
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.hidesWhenStopped = true
@@ -24,16 +22,13 @@ class SearchViewController: UITableViewController {
     }()
     
     override func loadView() {
-        
         super.loadView()
         view = searchView
-        
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        searchViewModel.readFromDefaultsCities()
+        searchViewModel.readSearchedCitiesFromUserDefaults()
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "cell")
         searchView.tableView.delegate = self
         searchView.tableView.dataSource = self
@@ -41,47 +36,23 @@ class SearchViewController: UITableViewController {
     }
     
     fileprivate func addCallbacks(){
-        
-        searchView.onSearchPressed = {
-            
-            [weak self] city in
+        searchView.onSearchPressed = { [weak self] city in
             self?.searchViewModel.fetchWeatherForCity(city: city)
-        
         }
-        searchViewModel.onActivityStarted = {
-            
-            [weak self] in
+        searchViewModel.onActivityStarted = { [weak self] in
             DispatchQueue.main.async {
                 self?.activityIndicator.startAnimating()
             }
-          
         }
-        searchViewModel.onActivityEnded = {
-            [weak self] in
+        searchViewModel.onActivityEnded = { [weak self] in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
             }
-            
         }
-        searchViewModel.onFetchFail = {
-            
-            [weak self] error in
+        searchViewModel.onFetchFail = { [weak self] error in
             DispatchQueue.main.async {
                 self?.showMessage(title: "Filed to fetch weather.", messagae: error)
             }
-            
-        }
-        searchViewModel.onFetchSucces = {
-            
-            [weak self] shouldUpdate in
-            DispatchQueue.main.async {
-                if shouldUpdate {
-                    print("Updating table view now!")
-                    self?.searchViewModel.saveToDefaultsCities()
-                }
-                self?.navigationController?.popViewController(animated: true)
-            }
-            
         }
         
     }
@@ -90,27 +61,21 @@ class SearchViewController: UITableViewController {
 
 
 extension SearchViewController {
-    
+    //MARK: - Table callbacks
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
          let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
                                                   for: indexPath)
          cell.textLabel?.text = self.searchViewModel.searchedCities[indexPath.row]
          cell.textLabel?.font = UIFont.systemFont(ofSize: 40)
          cell.textLabel?.textAlignment = .left
-         
          return cell
     }
-    
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         searchViewModel.searchedCities.count
     }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchViewModel?.fetchWeatherForCity(city: searchViewModel.searchedCities[indexPath.row])
     }

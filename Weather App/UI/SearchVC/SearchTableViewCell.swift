@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class SearchTableViewCell: UITableViewCell {
-
     private lazy var titleLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -26,14 +25,11 @@ class SearchTableViewCell: UITableViewCell {
     }
     
     fileprivate func setUp(){
-        
        setUpView()
        setUpConstraints()
-        
     }
     
     fileprivate func setUpView(){
-        
         backgroundColor = UIColor.clear
         selectedBackgroundView?.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         selectedBackgroundView?.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
@@ -41,11 +37,9 @@ class SearchTableViewCell: UITableViewCell {
         titleLabel.textAlignment = .left
         titleLabel.backgroundColor = UIColor.clear
         addSubview(titleLabel)
-        
     }
     
     fileprivate func setUpConstraints(){
-        
         titleLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

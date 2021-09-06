@@ -5,12 +5,10 @@
 //  Created by Ivan Stajcer on 31.08.2021..
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
 class SettingsView : UIView {
-    
     var settingsChanged : ((Settings)->Void)?
     
     private lazy var backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
@@ -45,15 +43,13 @@ class SettingsView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateView(settings: Settings){
-        
+    func updateView(settings: Settings) {
         print("Updating view! \n with: \n \(settings)")
         celsiusCheckButton.isChecked = settings.isCelsius
         fahrenhitCheckButton.isChecked = settings.isFarenheit
         humidityCheckButton.isChecked = settings.showHumidity
         pressureCheckButton.isChecked = settings.showPressure
         windCheckButton.isChecked = settings.showWind
-        
     }
     
     private func setUp(){
@@ -62,7 +58,6 @@ class SettingsView : UIView {
     }
     
     private func setUpView(){
-        
         let img = UIImage(named: "background")!
         backgroundImageView.image = img.scalePreservingAspectRatio(targetSize: CGSize(width: UIScreen.main.bounds.width*8, height: UIScreen.main.bounds.height))
         backgroundImageView.contentMode = .scaleToFill
@@ -81,73 +76,12 @@ class SettingsView : UIView {
         bottomStackView.addArrangedSubview(humidityStackView)
         bottomStackView.addArrangedSubview(pressureStackView)
         bottomStackView.addArrangedSubview(windStackView)
-        
         addSubview(topView)
         addSubview(bottomStackView)
-        
-    }
     
-    private func setUpTopStack(){
-                
-        //CELS
-        celsiusCheckButton.setOpposite(fahrenhitCheckButton)
-        
-        celsiusLabel.text = "Celsius"
-        celsiusLabel.font = UIFont.systemFont(ofSize: normalFontSize)
-        celsiusLabel.textAlignment = .left
-        
-        celsiusStackView.alignment = .leading
-        celsiusStackView.spacing = 20
-        celsiusStackView.addArrangedSubview(celsiusCheckButton)
-        celsiusStackView.addArrangedSubview(celsiusLabel)
-        
-        ///FAHR
-        fahrenhitCheckButton.setOpposite(celsiusCheckButton)
-        
-        fahrenheitLabel.text = "Fahrenheit"
-        fahrenheitLabel.font = UIFont.systemFont(ofSize: normalFontSize)
-        fahrenheitLabel.textAlignment = .left
-        
-        fahrenhitStackView.alignment = .leading
-        fahrenhitStackView.spacing = 20
-        fahrenhitStackView.addArrangedSubview(fahrenhitCheckButton)
-        fahrenhitStackView.addArrangedSubview(fahrenheitLabel)
-        
-        
-    }
-    
-    private func setUpBottomStack(){
-        
-        let hImage = UIImage(named: "humidity")!
-        let pImage = UIImage(named: "pressure")!
-        let wImage = UIImage(named: "wind")!
-        
-        humidity.image = hImage
-        pressure.image = pImage
-        wind.image = wImage
-        
-        humidityStackView.alignment = .center
-        humidityStackView.spacing = 15
-        humidityStackView.axis = .vertical
-        humidityStackView.addArrangedSubview(humidity)
-        humidityStackView.addArrangedSubview(humidityCheckButton)
-        
-        pressureStackView.alignment = .center
-        pressureStackView.spacing = 15
-        pressureStackView.axis = .vertical
-        pressureStackView.addArrangedSubview(pressure)
-        pressureStackView.addArrangedSubview(pressureCheckButton)
-        
-        windStackView.alignment = .center
-        windStackView.axis = .vertical
-        windStackView.spacing = 15
-        windStackView.addArrangedSubview(wind)
-        windStackView.addArrangedSubview(windCheckButton)
-        
     }
     
     private func setUpConstraints(){
-        
         backgroundImageView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
         }
@@ -166,7 +100,6 @@ class SettingsView : UIView {
             make.left.equalTo(fahrenhitStackView)
             make.bottom.equalTo(fahrenhitStackView.snp.top).inset(-30)
         }
-        //bottom
         bottomStackView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
             make.left.right.bottom.equalTo(safeAreaLayoutGuide).inset(60)
@@ -197,27 +130,24 @@ class SettingsView : UIView {
     
 }
 
-extension SettingsView {
-    
+fileprivate extension SettingsView {
     //MARK: - CALLBACKS
-    @objc private func celsiusPressed(){
+    @objc func celsiusPressed(){
         settingsChanged?(currentSettings())
     }
-    @objc private func fahrenheitPressed(){
+    @objc func fahrenheitPressed(){
         settingsChanged?(currentSettings())
     }
-    @objc private func humidityPressed(){
+    @objc func humidityPressed(){
         settingsChanged?(currentSettings())
     }
-    @objc private func pressurePressed(){
+    @objc func pressurePressed(){
         settingsChanged?(currentSettings())
     }
-    @objc private func windPressed(){
+    @objc func windPressed(){
         settingsChanged?(currentSettings())
     }
-    
-    fileprivate func currentSettings()->Settings{
-        
+    func currentSettings()->Settings{
         Settings(
             isCelsius: celsiusCheckButton.isChecked,
             isFarenheit: fahrenhitCheckButton.isChecked,
@@ -225,7 +155,52 @@ extension SettingsView {
             showPressure: pressureCheckButton.isChecked,
             showWind: windCheckButton.isChecked
         )
-        
+    }
+}
+
+fileprivate extension SettingsView {
+    private func setUpTopStack(){
+        //celsius
+        celsiusCheckButton.setOpposite(fahrenhitCheckButton)
+        celsiusLabel.text = "Celsius"
+        celsiusLabel.font = UIFont.systemFont(ofSize: normalFontSize)
+        celsiusLabel.textAlignment = .left
+        celsiusStackView.alignment = .leading
+        celsiusStackView.spacing = 20
+        celsiusStackView.addArrangedSubview(celsiusCheckButton)
+        celsiusStackView.addArrangedSubview(celsiusLabel)
+        ///fahrenheit
+        fahrenhitCheckButton.setOpposite(celsiusCheckButton)
+        fahrenheitLabel.text = "Fahrenheit"
+        fahrenheitLabel.font = UIFont.systemFont(ofSize: normalFontSize)
+        fahrenheitLabel.textAlignment = .left
+        fahrenhitStackView.alignment = .leading
+        fahrenhitStackView.spacing = 20
+        fahrenhitStackView.addArrangedSubview(fahrenhitCheckButton)
+        fahrenhitStackView.addArrangedSubview(fahrenheitLabel)
     }
     
+    private func setUpBottomStack() {
+        let hImage = UIImage(named: "humidity")!
+        let pImage = UIImage(named: "pressure")!
+        let wImage = UIImage(named: "wind")!
+        humidity.image = hImage
+        pressure.image = pImage
+        wind.image = wImage
+        humidityStackView.alignment = .center
+        humidityStackView.spacing = 15
+        humidityStackView.axis = .vertical
+        humidityStackView.addArrangedSubview(humidity)
+        humidityStackView.addArrangedSubview(humidityCheckButton)
+        pressureStackView.alignment = .center
+        pressureStackView.spacing = 15
+        pressureStackView.axis = .vertical
+        pressureStackView.addArrangedSubview(pressure)
+        pressureStackView.addArrangedSubview(pressureCheckButton)
+        windStackView.alignment = .center
+        windStackView.axis = .vertical
+        windStackView.spacing = 15
+        windStackView.addArrangedSubview(wind)
+        windStackView.addArrangedSubview(windCheckButton)
+    }
 }

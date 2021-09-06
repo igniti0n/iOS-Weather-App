@@ -30,51 +30,42 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeViewModel.deleteWeatherFromDefaults()
+        homeViewModel.requestLoactionPermission()
         navigationItem.backButtonTitle = ""
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        homeViewModel.fetchWeather()
-    }
-    
     fileprivate func addCallbacks(){
-        
-        homeView.searchButtonPressed = {
-            [weak self] in
+        homeView.searchButtonPressed = { [weak self] in
             self?.homeViewModel.onSearchPressed()
         }
-        homeView.settingsButtonPressed = {
-            [weak self] in
+        homeView.settingsButtonPressed = { [weak self] in
             self?.homeViewModel.onSettingsPressed()
         }
-        homeViewModel.onFetchSucces = {
-            [weak self] weather,settings in
+        homeViewModel.onFetchSucces = { [weak self] weather,settings in
             DispatchQueue.main.async {
-                self?.homeView.updateWeatherView(weather: weather, settings: settings)
+                self?.homeView.updateWeatherView(weather: weather)
+                self?.homeView.updateWeatherSettings(settings: settings)
             }
         }
-        homeViewModel.onFetchFail = {
-            [weak self] error in
+        homeViewModel.onFetchFail = { [weak self] error in
             DispatchQueue.main.async {
                 self?.showMessage(title: "Fetching failed.", messagae: error)
             }
-           
         }
-        homeViewModel.onActivityStarted = {
-            [weak self] in
+        homeViewModel.onActivityStarted = { [weak self] in
             DispatchQueue.main.async {
                 self?.activityIndicator.startAnimating()
             }
-          
         }
-        homeViewModel.onActivityEnded = {
-            [weak self] in
+        homeViewModel.onActivityEnded = { [weak self] in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
             }
-            
+        }
+        homeViewModel.onSearchWeatherFetch = { [weak self] weather in
+            DispatchQueue.main.async {
+                self?.homeView.updateWeatherView(weather: weather)
+            }
         }
        
     }
@@ -82,13 +73,12 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: CLLocationManagerDelegate {
-    
+    //MARK: - Location
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        
+        homeViewModel.deleteWeatherFromDefaults()
         if manager.authorizationStatus == .authorizedWhenInUse {
             homeViewModel.fetchWeather()
         }
-        
     }
     
 }

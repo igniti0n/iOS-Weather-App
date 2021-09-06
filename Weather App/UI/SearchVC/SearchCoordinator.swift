@@ -14,23 +14,30 @@ import  UIKit
  */
 
 class SearchCoordinator : Coordinator {
+    var onSearchWeatherFetch: ((Weather)->Void)?
         
     func start() -> UIViewController {
         let vc = createSearchVC()
-       
         return vc
     }
-    
-   
-    
+}
+
+fileprivate extension SearchCoordinator {
+    //MARK: - CREATING
     private func createSearchVC() -> UIViewController{
-        let vc = SearchViewController()
-        let vm = SearchViewModel(networkWeatherService: ServiceFactory.networkWeatherService)
-        
-        vc.searchViewModel = vm
-        return vc
+        let searchController = SearchViewController()
+        let searchViewModel = SearchViewModel(networkWeatherService: ServiceFactory.networkWeatherService)
+        searchViewModel.onFetchSucces = { [weak self] newWeather in
+            DispatchQueue.main.async {
+                self?.onSearchWeatherFetch?(newWeather)
+            }
+        }
+        searchController.searchViewModel = searchViewModel
+        return searchController
     }
+}
+    
     
   
     
-}
+

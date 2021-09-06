@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class SearchView : UIView {
-    
+    var tableView = UITableView()
     var tableDelegate : UITableViewDelegate?
     var tableDataDelegate : UITableViewDataSource?
     var onSearchPressed: ((String)->Void)?
@@ -18,7 +18,6 @@ class SearchView : UIView {
     private lazy var backgroundImageView = UIImageView()
     private lazy var searchField = UITextField()
     private lazy var searchButton = UIButton()
-    public var tableView = UITableView()
     
     private let normalFontSize : CGFloat = 30.0
     
@@ -37,12 +36,10 @@ class SearchView : UIView {
     }
     
     private func setUpView(){
-        
         let img = UIImage(named: "background")!
         backgroundImageView.image = img.scalePreservingAspectRatio(targetSize: CGSize(width: UIScreen.main.bounds.width*8, height: UIScreen.main.bounds.height))
         backgroundImageView.contentMode = .scaleToFill
         insertSubview(backgroundImageView, at: 0)
-        
         searchField.placeholder = "Search"
         searchField.font = UIFont.systemFont(ofSize: normalFontSize)
         searchField.bounds.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
@@ -52,21 +49,17 @@ class SearchView : UIView {
         searchField.layer.cornerRadius = 4
         searchField.layer.borderWidth = 1
         addSubview(searchField)
-        
         searchButton.setImage(UIImage(named: "search"), for: .normal)
         searchButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
         addSubview(searchButton)
-        
         tableView.allowsSelection = true
         tableView.backgroundColor = UIColor.clear
         tableView.layer.backgroundColor = UIColor.clear.cgColor
         tableView.separatorStyle = .none
         addSubview(tableView)
-        
     }
     
     private func setUpConstraints(){
-        
         backgroundImageView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
         }
@@ -84,17 +77,14 @@ class SearchView : UIView {
             make.bottom.equalTo(safeAreaLayoutGuide)
             make.top.equalTo(searchField.snp.bottom).offset(20)
         }
-        
     }
     
 }
 
-extension SearchView {
-    
+fileprivate extension SearchView {
     //MARK: - Callbacks
-    @objc fileprivate func searchPressed(){
+    @objc func searchPressed(){
         guard let text = searchField.text else {return}
         onSearchPressed?(text)
     }
-    
 }

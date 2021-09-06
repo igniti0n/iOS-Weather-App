@@ -8,10 +8,8 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-    
     var settingsView = SettingsView()
     var settingsViewModel : SettingsViewModel?
-
     
     override func loadView() {
         super.loadView()
@@ -29,18 +27,14 @@ class SettingsViewController: UIViewController {
     }
     
     fileprivate func addCallbacks(){
-        
-        settingsView.settingsChanged = {
-            [weak self] settings in
+        settingsView.settingsChanged = { [weak self] settings in
             self?.settingsViewModel?.settingsChanged(newSettings: settings)
         }
-        settingsViewModel?.onSettingsLoaded = {
-            [weak self] settings in
+        settingsViewModel?.onSettingsLoaded = { [weak self] settings in
             DispatchQueue.main.async {
                 self?.settingsView.updateView(settings: settings)
             }
         }
-        
     }
     
 }

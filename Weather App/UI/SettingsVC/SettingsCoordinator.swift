@@ -9,29 +9,23 @@ import Foundation
 import UIKit
 import SnapKit
 
-/*
- nisam dodao još funkcinalnosti, samo da se moze prikazati
- */
-
 class SettingsCoordinator : Coordinator {
+    var onScreenExit: ((Settings)->Void)?
     
     func start() -> UIViewController {
-        
         let vc = createSettingsVC()
         return vc
-        
     }
  
-    private func createSettingsVC() -> UIViewController{
-        
+    private func createSettingsVC() -> UIViewController {
         let vc = SettingsViewController()
         let vm = SettingsViewModel()
+        vm.onScreeExit = { [weak self] settings in
+            self?.onScreenExit?(settings)
+        }
         vc.settingsViewModel = vm
         return vc
-        
     }
-    
-  
     
 }
 

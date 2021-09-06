@@ -9,11 +9,10 @@ import Foundation
 
 
 class SearchViewModel {
-    
     var searchedCities = [String]()
     var onActivityStarted: EmptyCallback?
     var onActivityEnded: EmptyCallback?
-    var onFetchSucces: ((Bool)->Void)?
+    var onFetchSucces: ((Weather)->Void)?
     var onFetchFail: ((String)->Void)?
     
     private let networkWeatherService: NetworkWeatherServiceProtocol
@@ -23,11 +22,8 @@ class SearchViewModel {
     }
     
     public func fetchWeatherForCity(city: String){
-        
         onActivityStarted?()
-        networkWeatherService.fetchWeatherCity(city: city) {
-            [weak self]
-            result in
+        networkWeatherService.fetchWeatherCity(city: city) { [weak self] result in
             self?.onActivityEnded?()
             switch result {
             case .success(let weather):
@@ -37,43 +33,13 @@ class SearchViewModel {
                 self?.fetchFail(errorMessage: error.rawValue)
             }
         }
-        
     }
-    
-    fileprivate func fetchSuccess(weather: Weather){
-        
-        let result = saveToDefaults(weather: weather)
-        if  result != nil {
-            fetchFail(errorMessage: result!)
-        }else{
-            updateSearchedCities(city: weather.name)
-        }
-        
-    }
-    
-    fileprivate func updateSearchedCities(city: String){
-        if searchedCities.contains(city){
-            onFetchSucces?(false)
-        }else{
-            print("City not in array, adding it now.")
-            searchedCities.insert(city, at: 0)
-            onFetchSucces?(true)
-        }
-    }
-    
-    fileprivate func fetchFail(errorMessage: String){
-        onFetchFail?(errorMessage)
-    }
-    
-    
     
 }
 
 extension SearchViewModel {
-    
     //MARK: - User defaults
-    func saveToDefaultsCities(){
-        
+    func saveSearchedCitiesToUserDefaults(){
         let defaults = UserDefaults.standard
         guard
         let encodedData = try? JSONEncoder().encode(searchedCities)
@@ -81,10 +47,9 @@ extension SearchViewModel {
             return
         }
         defaults.setValue(encodedData, forKey: "cities")
-        
     }
     
-    func readFromDefaultsCities(){
+    func readSearchedCitiesFromUserDefaults(){
         
         let defaults = UserDefaults.standard
         guard
@@ -98,7 +63,6 @@ extension SearchViewModel {
     }
     
     fileprivate func saveToDefaults(weather: Weather) -> String?{
-        
         let defaults = UserDefaults.standard
         guard
         let encodedData = weather.toData()
@@ -107,6 +71,27 @@ extension SearchViewModel {
         }
         defaults.setValue(encodedData, forKey: "weather")
         return nil
-        
+    }
+}
+
+fileprivate extension SearchViewModel {
+    //MARK: - Callbacks
+    func fetchSuccess(weather: Weather){
+        let result = saveToDefaults(weather: weather)
+        if  result != nil {
+            fetchFail(errorMessage: result!)
+        }else{
+            updateSearchedCities(city: weather.name)
+            onFetchSucces?(weather)
+        }
+    }
+    func updateSearchedCities(city: String){
+        if !searchedCities.contains(city){
+            searchedCities.insert(city, at: 0)
+            saveSearchedCitiesToUserDefaults()
+        }
+    }
+    func fetchFail(errorMessage: String){
+        onFetchFail?(errorMessage)
     }
 }
