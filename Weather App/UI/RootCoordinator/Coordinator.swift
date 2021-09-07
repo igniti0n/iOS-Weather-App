@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 
-public protocol Coordinator : Any {
+public protocol Coordinator: Any {
     
     @discardableResult
-    func start()-> UIViewController
+    func start() -> UIViewController
     
 }
