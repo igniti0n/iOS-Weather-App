@@ -11,7 +11,6 @@
 		2C1E0DB526DE8CA900DC2412 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1E0DB426DE8CA900DC2412 /* SceneDelegate.swift */; };
 		2C1E0DBC26DE8CAC00DC2412 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C1E0DBB26DE8CAC00DC2412 /* Assets.xcassets */; };
 		2C1E0DBF26DE8CAC00DC2412 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C1E0DBD26DE8CAC00DC2412 /* LaunchScreen.storyboard */; };
-		2C3CD2AF26E9137B004B273A /* AdaptiveLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3CD2AE26E9137B004B273A /* AdaptiveLayoutHelper.swift */; };
 		2CF4F96B26E66F1E00B6C932 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CF4F96A26E66F1E00B6C932 /* Main.storyboard */; };
 		2CF4F9C926E7672600B6C932 /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4F9C326E7672600B6C932 /* CheckButton.swift */; };
 		2CF4F9CA26E7672600B6C932 /* ConstraintsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4F9C526E7672600B6C932 /* ConstraintsExtension.swift */; };
@@ -49,7 +48,6 @@
 		2C1E0DBB26DE8CAC00DC2412 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C1E0DBE26DE8CAC00DC2412 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C1E0DC026DE8CAC00DC2412 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2C3CD2AE26E9137B004B273A /* AdaptiveLayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveLayoutHelper.swift; sourceTree = "<group>"; };
 		2CF4F96A26E66F1E00B6C932 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2CF4F9C326E7672600B6C932 /* CheckButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckButton.swift; sourceTree = "<group>"; };
 		2CF4F9C526E7672600B6C932 /* ConstraintsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintsExtension.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				2CF4F9C226E7672600B6C932 /* Classes */,
 				2CF4F9C426E7672600B6C932 /* Extensions */,
 				2CF4F9C826E7672600B6C932 /* TypeAliases.swift */,
-				2C3CD2AE26E9137B004B273A /* AdaptiveLayoutHelper.swift */,
 			);
 			name = Common;
 			path = Services/Common;
@@ -386,7 +383,6 @@
 				2C1E0DB326DE8CA900DC2412 /* AppDelegate.swift in Sources */,
 				2CF4F9CC26E7672600B6C932 /* NavigationBarExtension.swift in Sources */,
 				2C1E0DB526DE8CA900DC2412 /* SceneDelegate.swift in Sources */,
-				2C3CD2AF26E9137B004B273A /* AdaptiveLayoutHelper.swift in Sources */,
 				2CF4F9EF26E7675200B6C932 /* RootCoordinator.swift in Sources */,
 				2CF4F9F926E7677800B6C932 /* LocationService.swift in Sources */,
 				2CF4F9E526E7675200B6C932 /* HomeCoordinator.swift in Sources */,
