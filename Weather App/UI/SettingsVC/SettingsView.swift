@@ -32,7 +32,9 @@ class SettingsView: UIView {
     private lazy var pressureStackView = UIStackView()
     private lazy var windStackView = UIStackView()
     
-    private let normalFontSize: CGFloat = 30.0
+    private let normalFontSize: CGFloat = {
+        UIScreen.main.bounds.height > 600 ? 30 : 20
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,7 +46,6 @@ class SettingsView: UIView {
     }
     
     func updateView(settings: Settings) {
-        print("Updating view! \n with: \n \(settings)")
         celsiusCheckButton.isChecked = settings.isCelsius
         fahrenhitCheckButton.isChecked = settings.isFarenheit
         humidityCheckButton.isChecked = settings.showHumidity
@@ -88,6 +89,7 @@ class SettingsView: UIView {
             make.height.equalTo(UIScreen.main.bounds.height)
         }
         celsiusCheckButton.snp.makeConstraints { make in
+            make.height.equalTo(normalFontSize*1.5)
             make.width.equalTo(celsiusCheckButton.snp.height)
         }
         topView.snp.makeConstraints { make in
@@ -119,13 +121,21 @@ class SettingsView: UIView {
             make.height.width.equalTo(celsiusCheckButton)
         }
         wind.snp.makeConstraints { make in
-            make.width.height.equalTo(80)
+            UIScreen.main.bounds.height <= 600 ?
+                make.width.height.lessThanOrEqualTo(80) : make.width.height.equalTo(80)
+            
         }
         pressure.snp.makeConstraints { make in
-            make.width.height.equalTo(80)
+            make.width.height.equalTo(wind.snp.width)
         }
         humidity.snp.makeConstraints { make in
-            make.width.height.equalTo(80)
+            make.width.height.equalTo(wind.snp.width)
+        }
+        celsiusLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(celsiusCheckButton)
+        }
+        fahrenheitLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(fahrenhitCheckButton)
         }
         
     }

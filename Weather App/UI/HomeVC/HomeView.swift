@@ -31,17 +31,12 @@ class HomeView : UIView {
     private lazy var windLabel = UILabel()
     private var conditionId = 800
    
-    private let normalFontSize: CGFloat = 30.0
-    private let downAttributes:  [NSAttributedString.Key : Any] =
-        [
-            .font : UIFont.systemFont(ofSize: 30.0 - 4, weight: .bold),
-            .foregroundColor : UIColor.white
-        ]
-    private let upAttributes :  [NSAttributedString.Key : Any]  =
-        [
-            .font : UIFont.systemFont(ofSize: 30.0 - 8),
-            .foregroundColor : UIColor.white
-        ]
+    private let normalFontSize: CGFloat = {
+        UIScreen.main.bounds.height > 600 ? 30 : 24
+    }()
+    private let buttonSize: CGFloat = {
+        UIScreen.main.bounds.height > 600 ? 44 : 36
+    }()
     
     var iconName: String {
         switch conditionId {
@@ -115,7 +110,7 @@ class HomeView : UIView {
         temperatureLabel.text = "21°C"
         temperatureLabel.adjustsFontSizeToFitWidth = true
         temperatureLabel.textAlignment = .right
-        temperatureLabel.font = UIFont.systemFont(ofSize: 100, weight: .bold)
+        temperatureLabel.font = UIFont.systemFont(ofSize: normalFontSize*2.5, weight: .bold)
         temperatureLabel.contentMode = .scaleAspectFit
         addSubview(temperatureLabel)
         cityNameLabel.text = "London"
@@ -135,7 +130,7 @@ class HomeView : UIView {
             make.height.equalTo(UIScreen.main.bounds.height)
         }
         searchButton.snp.makeConstraints { make in
-            make.width.height.equalTo(44)
+            make.width.height.equalTo(buttonSize)
             make.top.equalTo(safeAreaLayoutGuide).offset(10)
             make.left.equalTo(safeAreaLayoutGuide).offset(40)
         }
@@ -143,28 +138,27 @@ class HomeView : UIView {
             make.top.width.height.equalTo(searchButton)
             make.left.equalTo(searchButton.snp.right).offset(20)
         }
+        weatherIcon.snp.makeConstraints { make in
+            make.top.equalTo(self).inset(40)
+            make.right.equalTo(safeAreaLayoutGuide).inset(20)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.3)
+            make.height.equalTo(weatherIcon.snp.width)
+        }
         temperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(searchButton.snp.bottom).offset(60)
+            make.top.equalTo(weatherIcon.snp.bottom).offset(30)
             make.trailing.equalToSuperview().inset(10)
             make.width.equalToSuperview().inset(40)
         }
-        weatherIcon.snp.makeConstraints { make in
-            make.top.equalTo(self).inset(40)
-            make.right.equalTo(safeAreaLayoutGuide).inset(30)
-            make.bottom.equalTo(temperatureLabel.snp.top).inset(-30)
-            make.width.equalTo(weatherIcon.snp.height)
-        }
         cityNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(temperatureLabel.snp.bottom).offset(10)
+            make.top.equalTo(temperatureLabel.snp.bottom).offset(20)
             make.trailing.equalTo(temperatureLabel)
         }
         bottomView.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(safeAreaLayoutGuide)
-            make.top.equalTo(cityNameLabel.snp.bottom).offset(50)
+            make.top.equalTo(cityNameLabel.snp.bottom).offset(0)
         }
         minMaxStackView.snp.makeConstraints { make in
             make.left.right.top.equalTo(bottomView)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.24)
         }
         detialsStackView.snp.makeConstraints { make in
             make.top.equalTo(minMaxStackView.snp.bottom)
@@ -195,7 +189,6 @@ fileprivate extension HomeView {
         minMaxStackView.alignment = .center
         minMaxStackView.distribution = .fillEqually
     }
-    
     func setUpDetailsStack(){
         let humidityAS = makeHumidityAttributedString(humidity: 0.64)
         humidityLabel.attributedText = humidityAS
@@ -220,7 +213,6 @@ fileprivate extension HomeView {
         detialsStackView.addArrangedSubview(windLabel)
         detialsStackView.alignment = .bottom
         detialsStackView.distribution = .fillEqually
-        
     }
     
 }
@@ -240,23 +232,29 @@ fileprivate extension HomeView {
     //MARK: - Attributed Strings
      func makeHumidityAttributedString(humidity: Double) -> NSMutableAttributedString {
         let humidityAS = NSMutableAttributedString(string: "Humidity \n \(humidity) %")
-        humidityAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
-        humidityAS.addAttributes(downAttributes,range: NSRange(location: 8,length: humidityAS.string.count-8))
+        humidityAS.addAttributes(getAttributes(fontOffset: 8), range: NSRange(location: 0, length: 8))
+        humidityAS.addAttributes(getAttributes(fontOffset: 4),range: NSRange(location: 8,length: humidityAS.string.count-8))
         return humidityAS
     }
-    
     func makePressureAttributedString(pressure: Double) -> NSMutableAttributedString {
         let pressureAS = NSMutableAttributedString(string: "Pressure \n \(pressure) hpa")
-        pressureAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 8))
-        pressureAS.addAttributes(downAttributes,range: NSRange(location: 8, length: pressureAS.string.count-8))
+        pressureAS.addAttributes(getAttributes(fontOffset: 8), range: NSRange(location: 0, length: 8))
+        pressureAS.addAttributes(getAttributes(fontOffset: 4),range: NSRange(location: 8, length: pressureAS.string.count-8))
         return pressureAS
     }
-    
     func makeWindAttributedString(wind: Double) -> NSMutableAttributedString {
         let windAS = NSMutableAttributedString(string:"Wind \n \(wind) mph")
-        windAS.addAttributes(upAttributes, range: NSRange(location: 0, length: 4))
-        windAS.addAttributes(downAttributes,range: NSRange(location: 5, length: windAS.string.count-5))
+        windAS.addAttributes(getAttributes(fontOffset: 8), range: NSRange(location: 0, length: 4))
+        windAS.addAttributes(getAttributes(fontOffset: 4),range: NSRange(location: 5, length: windAS.string.count-5))
         return windAS
+    }
+    func getAttributes(fontOffset offset: CGFloat) -> [NSAttributedString.Key : Any] {
+        let attributes :  [NSAttributedString.Key : Any]  =
+           [
+               .font : UIFont.systemFont(ofSize: normalFontSize - offset),
+               .foregroundColor : UIColor.white
+           ]
+        return attributes
     }
 }
 

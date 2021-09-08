@@ -17,8 +17,12 @@ class SearchView: UIView {
     private lazy var searchField = UITextField()
     private lazy var searchButton = UIButton()
     
-    private let normalFontSize: CGFloat = 30.0
+    private let sidesInsets: CGFloat = 70
     
+    private let normalFontSize: CGFloat = {
+        UIScreen.main.bounds.height > 600 ? 30 : 20
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
@@ -40,8 +44,6 @@ class SearchView: UIView {
         insertSubview(backgroundImageView, at: 0)
         searchField.placeholder = "Search"
         searchField.font = UIFont.systemFont(ofSize: normalFontSize)
-        searchField.bounds.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
-        //searchField.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         searchField.backgroundColor = .lightGray.withAlphaComponent(0.7)
         searchField.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         searchField.layer.cornerRadius = 4
@@ -64,13 +66,14 @@ class SearchView: UIView {
             make.height.equalTo(UIScreen.main.bounds.height)
         }
         searchField.snp.makeConstraints { make in
-            make.left.right.equalTo(safeAreaLayoutGuide).inset(80)
+            make.left.right.equalTo(safeAreaLayoutGuide).inset(sidesInsets)
+            make.height.lessThanOrEqualTo(2*normalFontSize)
             make.top.equalTo(safeAreaLayoutGuide).inset(40)
         }
         searchButton.snp.makeConstraints { make in
-            make.left.equalTo(searchField.snp.right)
-            make.top.bottom.equalTo(searchField)
-            make.right.equalTo(safeAreaLayoutGuide)
+            make.left.equalTo(searchField.snp.right).offset(10)
+            make.height.top.equalTo(searchField)
+            make.width.equalTo(searchButton.snp.height)
         }
         tableView.snp.makeConstraints { make in
             make.left.right.equalTo(searchField)
