@@ -63,13 +63,11 @@ class SearchViewController: UITableViewController {
 extension SearchViewController {
     //MARK: - Table callbacks
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         guard
          let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
-                                                  for: indexPath)
-         let cellFontSize: CGFloat = UIScreen.main.bounds.height > 600 ? 30 : 24
-         cell.textLabel?.text = self.searchViewModel.searchedCities[indexPath.row]
-         cell.textLabel?.font = UIFont.systemFont(ofSize: cellFontSize)
-         cell.textLabel?.textAlignment = .left
-         cell.textLabel?.adjustsFontSizeToFitWidth = true
+                                                  for: indexPath) as? SearchTableViewCell
+         else {return UITableViewCell()}
+         cell.setUpCell(city: searchViewModel.searchedCities[indexPath.row])
          return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

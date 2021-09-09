@@ -31,13 +31,8 @@ class HomeView : UIView {
     private lazy var windLabel = UILabel()
     private var conditionId = 800
    
-    private let normalFontSize: CGFloat = {
-        UIScreen.main.bounds.height > 600 ? 30 : 24
-    }()
-    private let buttonSize: CGFloat = {
-        UIScreen.main.bounds.height > 600 ? 44 : 36
-    }()
-    
+    private let normalFontSize: CGFloat = 30
+
     var iconName: String {
         switch conditionId {
             case 200...232:
@@ -60,6 +55,12 @@ class HomeView : UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func adjustFont(){
+        print("hF: ", humidityLabel.font)
+        print("pF: ", pressureLabel.font)
+        print("wF: ", windLabel.font)
     }
     
     public func updateWeatherView(weather: Weather){
@@ -130,7 +131,7 @@ class HomeView : UIView {
             make.height.equalTo(UIScreen.main.bounds.height)
         }
         searchButton.snp.makeConstraints { make in
-            make.width.height.equalTo(buttonSize)
+           // make.width.height.equalTo(buttonSize)
             make.top.equalTo(safeAreaLayoutGuide).offset(10)
             make.left.equalTo(safeAreaLayoutGuide).offset(40)
         }
@@ -165,6 +166,12 @@ class HomeView : UIView {
             make.bottom.equalTo(bottomView).inset(40)
             make.leading.trailing.equalTo(bottomView)
         }
+        humidityLabel.snp.makeConstraints { make in
+            make.width.equalTo(pressureLabel)
+        }
+        windLabel.snp.makeConstraints { make in
+            make.width.equalTo(pressureLabel)
+        }
 
     }
         
@@ -194,25 +201,23 @@ fileprivate extension HomeView {
         humidityLabel.attributedText = humidityAS
         humidityLabel.numberOfLines = 2
         humidityLabel.textAlignment = .center
-        humidityLabel.sizeToFit()
         humidityLabel.adjustsFontSizeToFitWidth = true
         let pressureAS = makePressureAttributedString(pressure: 1062.4)
         pressureLabel.attributedText = pressureAS
         pressureLabel.numberOfLines = 2
         pressureLabel.textAlignment = .center
-        pressureLabel.sizeToFit()
         pressureLabel.adjustsFontSizeToFitWidth = true
         let windAS = makeWindAttributedString(wind: 44)
         windLabel.attributedText = windAS
         windLabel.numberOfLines = 2
         windLabel.textAlignment = .center
-        windLabel.sizeToFit()
         windLabel.adjustsFontSizeToFitWidth = true
         detialsStackView.addArrangedSubview(humidityLabel)
         detialsStackView.addArrangedSubview(pressureLabel)
         detialsStackView.addArrangedSubview(windLabel)
         detialsStackView.alignment = .bottom
         detialsStackView.distribution = .fillEqually
+
     }
     
 }

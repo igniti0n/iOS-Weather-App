@@ -32,9 +32,7 @@ class SettingsView: UIView {
     private lazy var pressureStackView = UIStackView()
     private lazy var windStackView = UIStackView()
     
-    private let normalFontSize: CGFloat = {
-        UIScreen.main.bounds.height > 600 ? 30 : 20
-    }()
+    private let normalFontSize: CGFloat = 30
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -171,6 +169,7 @@ fileprivate extension SettingsView {
 }
 
 fileprivate extension SettingsView {
+    //MARK: - STACKS SETUP
     private func setUpTopStack(){
         //celsius
         celsiusCheckButton.setOpposite(fahrenhitCheckButton)

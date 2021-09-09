@@ -20,8 +20,8 @@ class SearchTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func setName(name: String){
-        titleLabel.text = name
+    func setUpCell(city text: String){
+        titleLabel.text = text
     }
     
     fileprivate func setUp(){
@@ -35,6 +35,8 @@ class SearchTableViewCell: UITableViewCell {
         selectedBackgroundView?.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         selectedBackgroundView?.layer.cornerRadius = 10
         titleLabel.textAlignment = .left
+        titleLabel.font = UIFont.systemFont(ofSize: 30)
+        titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.backgroundColor = UIColor.clear
         addSubview(titleLabel)
     }
