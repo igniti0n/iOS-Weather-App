@@ -57,38 +57,6 @@ class HomeView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func adjustFont(){
-        print("hF: ", humidityLabel.font)
-        print("pF: ", pressureLabel.font)
-        print("wF: ", windLabel.font)
-    }
-    
-    public func updateWeatherView(weather: Weather){
-        let messurmentUnit = weather.temperature < 100 ? "°C" : "°F"
-        temperatureLabel.text = "\(weather.temperature)\(messurmentUnit)"
-        minTemperatureLabel.text = "min \n \(weather.minTemperature)\(messurmentUnit)"
-        maxTemperatureLabel.text = "max \n \(weather.maxTemperature)\(messurmentUnit)"
-        cityNameLabel.text = weather.name
-        conditionId = weather.conditionId
-        weatherIcon.image = UIImage(systemName: iconName)
-        humidityLabel.attributedText = makeHumidityAttributedString(humidity: weather.humidity)
-        pressureLabel.attributedText = makePressureAttributedString(pressure: weather.pressure)
-        windLabel.attributedText = makeWindAttributedString(wind: weather.windSpeed)
-    }
-    
-    public func updateWeatherSettings(settings: Settings){
-        let messurmentUnit = settings.isCelsius ? "°C" : "°F"
-        temperatureLabel.text?.removeLast(2)
-        temperatureLabel.text? += messurmentUnit
-        minTemperatureLabel.text?.removeLast(2)
-        minTemperatureLabel.text? += messurmentUnit
-        maxTemperatureLabel.text?.removeLast(2)
-        maxTemperatureLabel.text? += messurmentUnit
-        humidityLabel.isHidden = !settings.showHumidity
-        pressureLabel.isHidden = !settings.showPressure
-        windLabel.isHidden = !settings.showWind
-    }
-    
     private func setUp(){
         setUpView()
         setUpConstraints()
@@ -176,6 +144,35 @@ class HomeView : UIView {
     }
         
     
+}
+
+extension HomeView {
+    //MARK: - VIEW UPDATE
+    func updateWeatherView(weather: Weather){
+        let messurmentUnit = weather.temperature < 100 ? "°C" : "°F"
+        temperatureLabel.text = "\(weather.temperature)\(messurmentUnit)"
+        minTemperatureLabel.text = "min \n \(weather.minTemperature)\(messurmentUnit)"
+        maxTemperatureLabel.text = "max \n \(weather.maxTemperature)\(messurmentUnit)"
+        cityNameLabel.text = weather.name
+        conditionId = weather.conditionId
+        weatherIcon.image = UIImage(systemName: iconName)
+        humidityLabel.attributedText = makeHumidityAttributedString(humidity: weather.humidity)
+        pressureLabel.attributedText = makePressureAttributedString(pressure: weather.pressure)
+        windLabel.attributedText = makeWindAttributedString(wind: weather.windSpeed)
+    }
+    
+    func updateWeatherSettings(settings: Settings){
+        let messurmentUnit = settings.isCelsius ? "°C" : "°F"
+        temperatureLabel.text?.removeLast(2)
+        temperatureLabel.text? += messurmentUnit
+        minTemperatureLabel.text?.removeLast(2)
+        minTemperatureLabel.text? += messurmentUnit
+        maxTemperatureLabel.text?.removeLast(2)
+        maxTemperatureLabel.text? += messurmentUnit
+        humidityLabel.isHidden = !settings.showHumidity
+        pressureLabel.isHidden = !settings.showPressure
+        windLabel.isHidden = !settings.showWind
+    }
 }
 
 fileprivate extension HomeView {

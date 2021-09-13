@@ -32,11 +32,7 @@ class HomeViewController: UIViewController {
         homeViewModel.requestLoactionPermission()
         navigationItem.backButtonTitle = ""
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        homeView.adjustFont()
-    }
-    
+
     fileprivate func addCallbacks(){
         homeView.onSearchButtonPressed = { [weak self] in
             self?.homeViewModel.onSearchPressed()

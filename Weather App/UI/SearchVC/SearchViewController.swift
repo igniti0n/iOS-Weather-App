@@ -8,7 +8,6 @@
 import UIKit
 
 class SearchViewController: UITableViewController {
-
     var searchViewModel: SearchViewModel!
     let searchView = SearchView()
         
@@ -58,7 +57,6 @@ class SearchViewController: UITableViewController {
     }
 
 }
-
 
 extension SearchViewController {
     //MARK: - Table callbacks
