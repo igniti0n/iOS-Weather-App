@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
         homeViewModel.requestLoactionPermission()
         navigationItem.backButtonTitle = ""
     }
-    
+
     fileprivate func addCallbacks(){
         homeView.onSearchButtonPressed = { [weak self] in
             self?.homeViewModel.onSearchPressed()
